@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CockpitSaveOperation: CockpitPathForm, CockpitShellProcessForm {
+protocol CockpitSaveOperation: CockpitPathForm, CockpitShellExecutionForm {
 	
 	typealias DescribedCommand = (command: String, description: String)
 	typealias CopyArguments = (source: String, destination: String, description: String)

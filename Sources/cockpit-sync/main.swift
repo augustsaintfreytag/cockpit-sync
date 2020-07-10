@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitBackup: ParsableCommand, CockpitSaveOperation, ShellProcessForm {
+struct CockpitBackup: ParsableCommand, CockpitSaveOperation, ShellExecutionForm {
 
 	static var configuration = CommandConfiguration(
 		abstract: "Saves or restores data of a Cockpit CMS instance.",

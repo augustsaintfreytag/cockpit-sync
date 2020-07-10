@@ -7,9 +7,9 @@
 
 import Foundation
 
-protocol CockpitShellProcessForm: ShellProcessForm {}
+protocol CockpitShellExecutionForm: ShellExecutionForm {}
 
-extension CockpitShellProcessForm {
+extension CockpitShellExecutionForm {
 	
 	// MARK: Assertion
 	

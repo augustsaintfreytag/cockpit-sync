@@ -1,8 +1,8 @@
 import Foundation
 
-protocol ShellProcessForm {}
+protocol ShellExecutionForm {}
 
-extension ShellProcessForm {
+extension ShellExecutionForm {
 	
 	// MARK: Process Form
 
