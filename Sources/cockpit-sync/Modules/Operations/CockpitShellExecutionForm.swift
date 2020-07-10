@@ -1,12 +1,3 @@
-//
-//  CockpitShellForm.swift
-//  cockpit-sync
-//
-//  Created by August Saint Freytag on 10/07/2020.
-//
-
-import Foundation
-
 protocol CockpitShellExecutionForm: ShellExecutionForm {}
 
 extension CockpitShellExecutionForm {

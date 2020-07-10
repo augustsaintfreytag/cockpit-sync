@@ -1,5 +1,3 @@
-import Foundation
-
 protocol CockpitPathForm {
 	
 	/// A path or path component describing a resource on the local system.

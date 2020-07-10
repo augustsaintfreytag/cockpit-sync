@@ -1,5 +1,3 @@
-import Foundation
-
 protocol CockpitSaveOperation: CockpitPathForm, CockpitShellExecutionForm {
 	
 	typealias DescribedCommand = (command: String, description: String)

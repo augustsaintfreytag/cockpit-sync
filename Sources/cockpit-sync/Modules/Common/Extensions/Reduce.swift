@@ -1,5 +1,3 @@
-import Foundation
-
 typealias AnyHashableCase = Hashable & CaseIterable
 
 /// Calls the supplied `block` once for all cases in the inferred type conforming to `CaseIterable` with `Hashable` elements (e.g. an `enum`)
