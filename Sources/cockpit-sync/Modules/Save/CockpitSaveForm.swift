@@ -1,6 +1,6 @@
 import Foundation
 
-protocol CockpitSaveForm: ShellProcessForm {
+protocol CockpitSaveOperation: ShellProcessForm {
 
 	typealias Scope = CockpitBackup.Scope
 	
@@ -9,7 +9,7 @@ protocol CockpitSaveForm: ShellProcessForm {
 
 }
 
-extension CockpitSaveForm {
+extension CockpitSaveOperation {
 	
 	// MARK: Paths
 	
