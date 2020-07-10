@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitBackup: ParsableCommand, CockpitSaveForm, ShellProcessForm {
+struct CockpitBackup: ParsableCommand, CockpitSaveOperation, ShellProcessForm {
 
 	static var configuration = CommandConfiguration(
 		abstract: "Saves or restores data of a Cockpit CMS instance.",
@@ -46,7 +46,8 @@ struct CockpitBackup: ParsableCommand, CockpitSaveForm, ShellProcessForm {
 			return
 		}
 		
-		setUpDirectories(for: scope)
+		clearArchiveDirectories(for: scope)
+		setUpArchiveDirectories(for: scope)
 		saveCockpitToArchive(for: scope, dockerVolumeName: dockerVolumeName)
 	}
 	
