@@ -61,12 +61,12 @@ struct CockpitBackup: ParsableCommand, CockpitSaveForm, ShellProcessForm {
 
 extension CockpitBackup {
 
-	enum Mode: String, ExpressibleByArgument {
+	enum Mode: String, Hashable, CaseIterable, ExpressibleByArgument {
 		case save
 		case restore
 	}
 
-	enum Scope: String, ExpressibleByArgument {
+	enum Scope: String, Hashable, CaseIterable, ExpressibleByArgument {
 		case everything
 		case structure
 		case data
