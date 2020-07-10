@@ -1,10 +1,7 @@
 import Foundation
 
-protocol CockpitSaveOperation: ShellProcessForm {
-
-	typealias Scope = CockpitBackup.Scope
+protocol CockpitSaveOperation: CockpitPathForm, CockpitShellProcessForm {
 	
-	typealias Path = String
 	typealias DescribedCommand = (command: String, description: String)
 	typealias CopyArguments = (source: String, destination: String, description: String)
 
@@ -14,7 +11,7 @@ extension CockpitSaveOperation {
 	
 	// MARK: Paths
 	
-	private var archiveDirectoryName: String { "archive" }
+	private var archiveDirectoryName: String { "archive.nosync" }
 	
 	private var workingDirectoryPath: Path? { execute("pwd")?.outputString }
 	
@@ -88,43 +85,8 @@ extension CockpitSaveOperation {
 		
 		return copyCommands
 	}
-	
-	// MARK: Assertion
-	
-	private func assertShellResult(_ result: ShellStandardStreams?) {
-		guard let result = result else {
-			assertionFailure("Command could not be executed.")
-			return
-		}
-		
-		if result.hasError {
-			assertionFailure("Command exited with errors. \(result.errorStringDebugDescription)")
-		}
-	}
 
 	// MARK: Path Form
-	
-	private func directoryPathComponents(for scope: Scope) -> [Path] {
-		switch scope {
-		case .data:
-			return ["data"]
-		case .structure:
-			return ["structure"]
-		case .everything:
-			return reduce(allCasesIn: directoryPathComponents, excluding: Scope.everything)
-		}
-	}
-	
-	private func directoryHierarchyPathComponents(for scope: Scope) -> [Path] {
-		switch scope {
-		case .data:
-			return ["data/db", "data/uploads"]
-		case .structure:
-			return ["structure/collections"]
-		case .everything:
-			return reduce(allCasesIn: directoryHierarchyPathComponents, excluding: Scope.everything)
-		}
-	}
 
 	private func copyArgumentComponents(for scope: Scope) -> [CopyArguments] {
 		switch scope {
