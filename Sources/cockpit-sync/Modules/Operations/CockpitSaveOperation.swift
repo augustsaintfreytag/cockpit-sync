@@ -28,16 +28,6 @@ extension CockpitSaveOperation {
 		let shellResult = execute(removalCommand)
 		assertShellResult(shellResult)
 	}
-	
-	func dockerVolumeExists(_ dockerVolumeName: String) -> Bool {
-		let unverifiedResult = execute("docker volume inspect \(dockerVolumeName)")
-		
-		guard let result = unverifiedResult, result.hasError == false else {
-			return false
-		}
-		
-		return true
-	}
 
 	func saveCockpitToArchive(for scope: Scope, dockerVolumeName: String) {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: dockerVolumeName)
