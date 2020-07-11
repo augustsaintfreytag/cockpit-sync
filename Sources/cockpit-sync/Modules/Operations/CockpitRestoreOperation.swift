@@ -56,7 +56,7 @@ extension CockpitRestoreOperation {
 	// MARK: Command Argument Form
 	
 	private var cockpitDirectoryNames: [String] {
-		["cache", "collections", "data", "uploads", "thumbs", "tmp", "uploads"]
+		["cache", "collections", "data", "singleton", "thumbs", "tmp", "uploads"]
 	}
 	
 	private func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
@@ -77,11 +77,12 @@ extension CockpitRestoreOperation {
 		case .data:
 			return [
 				("data/db/*", "data/", "database"),
-				("data/uploads/*", "data/uploads/", "files and assets")
+				("data/uploads/*", "uploads/", "files and assets")
 			]
 		case .structure:
 			return [
 				("structure/collections/*", "collections/", "collections"),
+				("structure/singleton/*", "singleton/", "singletons"),
 				("structure/api*", "", "API data and credentials")
 			]
 		case .everything:

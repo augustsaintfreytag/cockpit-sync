@@ -19,7 +19,7 @@ extension CockpitSaveOperation {
 			return "rm -rf ./\(archiveDirectoryName)/\(pathComponent)"
 		}
 		
-		let removalCommand = removalCommands.joined(separator: " && ")
+		let removalCommand = removalCommands.joined(separator: "; ")
 		let shellResult = execute(removalCommand)
 		assertShellResult(shellResult)
 	}
@@ -62,6 +62,7 @@ extension CockpitSaveOperation {
 		case .structure:
 			return [
 				("collections/*", "structure/collections", "collections"),
+				("singleton/*", "structure/singleton", "singletons"),
 				("api*", "structure/", "API data and credentials")
 			]
 		case .everything:
