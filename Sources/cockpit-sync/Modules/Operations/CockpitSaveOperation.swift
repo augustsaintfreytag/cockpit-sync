@@ -44,13 +44,13 @@ extension CockpitSaveOperation {
 		switch scope {
 		case .data:
 			return [
-				("data/*", "data/db", "Database"),
-				("uploads/*", "data/uploads", "Files & Assets")
+				("data/*", "data/db", "database"),
+				("uploads/*", "data/uploads", "files and assets")
 			]
 		case .structure:
 			return [
-				("collections/*", "structure/collections", "Collections"),
-				("api*", "structure/", "API Data & Credentials")
+				("collections/*", "structure/collections", "collections"),
+				("api*", "structure/", "API data and credentials")
 			]
 		case .everything:
 			return reduce(allCasesIn: copyArgumentComponents, excluding: Scope.everything)
