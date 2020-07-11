@@ -21,17 +21,18 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 
 	// MARK: Arguments & Options
 
-	@Argument(help: "The mode of the operation.")
+	@Argument(help: "The mode of the operation. (options: save|restore)")
 	var mode: Mode
 
-	@Option(name: [.long, .short], help: "The scope of the operation.")
+	@Option(name: [.long, .short], help: "The scope of the operation. (options: structure|data|everything)")
 	var scope: Scope = .everything
 	
 	@Option(name: [.customLong("docker-volume"), .customShort("v")], help: "The name of the Docker volume used by Cockpit CMS to store data.")
 	var dockerVolumeName: String
 
-	@Option(name: [.customLong("path"), .customShort("p")], help: "The archive directory used to read and write data.")
-	var archivePath: String = "./archive"
+	// TODO: Re-establish use of archive directory as variable in all operations.
+	// @Option(name: [.customLong("path"), .customShort("p")], help: "The archive directory used to read and write data.")
+	// var archivePath: String = "./archive"
 
 	// MARK: Run
 
