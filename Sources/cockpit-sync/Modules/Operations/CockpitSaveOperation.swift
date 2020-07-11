@@ -32,7 +32,7 @@ extension CockpitSaveOperation {
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.rawValue) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 			
-			let streams = execute("docker run -i --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c '\(command)'")
+			let streams = execute("docker run --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c '\(command)'")
 			assertShellResult(streams)
 		}
 	}
