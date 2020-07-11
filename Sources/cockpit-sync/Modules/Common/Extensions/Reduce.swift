@@ -11,3 +11,12 @@ func reduce<CaseType: AnyHashableCase, Element>(allCasesIn block: (_ : CaseType)
 		allElements.append(contentsOf: elements)
 	}
 }
+
+func map<Element, Structure>(_ collection: [Element], _ block: (_ offset: Int, _ element: Element) -> Structure) -> [Structure] {
+	return collection.enumerated().map { enumeration -> Structure in
+		let (offset, element) = enumeration
+		let structure = block(offset, element)
+		
+		return structure
+	}
+}
