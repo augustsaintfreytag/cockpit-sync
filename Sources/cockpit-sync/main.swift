@@ -39,11 +39,17 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 		print("Running with mode '\(mode.rawValue)', scope '\(scope.rawValue)', supplied volume '\(dockerVolumeName)'.")
 
 		switch mode {
+		case .clear:
+			runClear()
 		case .save:
 			runSave()
 		case .restore:
 			runRestore()
 		}
+	}
+	
+	private func runClear() {
+		clearArchiveDirectories(for: scope)
 	}
 	
 	private func runSave() {

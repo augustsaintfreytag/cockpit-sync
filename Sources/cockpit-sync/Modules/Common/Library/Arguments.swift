@@ -7,6 +7,7 @@ enum Scope: String, Hashable, CaseIterable, ExpressibleByArgument {
 }
 
 enum Mode: String, Hashable, CaseIterable, ExpressibleByArgument {
+	case clear
 	case save
 	case restore
 }
