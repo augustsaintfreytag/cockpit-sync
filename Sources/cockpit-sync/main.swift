@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerPreparation, CockpitSaveOperation {
+struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerPreparation, CockpitSaveOperation, CockpitRestoreOperation {
 	
 	// MARK: Configuration
 	
@@ -28,7 +28,7 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 	var scope: Scope = .everything
 	
 	@Option(name: [.customLong("docker-volume"), .customShort("v")], help: "The name of the Docker volume used by Cockpit CMS to store data.")
-	var dockerVolumeName: String
+	var dockerVolumeName: String?
 
 	// TODO: Re-establish use of archive directory as variable in all operations.
 	// @Option(name: [.customLong("path"), .customShort("p")], help: "The archive directory used to read and write data.")
@@ -43,9 +43,9 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 		case .clear:
 			runClear()
 		case .save:
-			runSave()
+			try runSave()
 		case .restore:
-			runRestore()
+			try runRestore()
 		}
 	}
 	
@@ -53,20 +53,36 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 		clearArchiveDirectories(for: scope)
 	}
 	
-	private func runSave() {
-		guard dockerVolumeExists(dockerVolumeName) else {
-			assertionFailure("Docker volume named '\(dockerVolumeName)' does not exist.")
-			return
-		}
+	private func runSave() throws {
+		let volumeName = try assertDockerVolumeName()
 		
 		clearArchiveDirectories(for: scope)
 		setUpArchiveDirectories(for: scope)
-		saveCockpitToArchive(for: scope, dockerVolumeName: dockerVolumeName)
+		saveCockpitToArchive(for: scope, dockerVolumeName: volumeName)
 	}
 	
-	private func runRestore() {
-		// TODO: Implement restore capabilities.
-		fatalError("Not implemented.")
+	private func runRestore() throws {
+		let volumeName = try assertDockerVolumeName()
+		
+		guard archiveDirectoriesExist(for: scope) else {
+			throw PrerequisiteError(errorDescription: "Missing archive directory '\(archiveDirectoryName)' in working directory, can not restore without source.")
+		}
+		
+		restoreCockpitFromArchive(for: scope, dockerVolumeName: volumeName)
+	}
+	
+	// MARK: Prerequisites
+	
+	private func assertDockerVolumeName() throws -> String {
+		guard let volumeName = dockerVolumeName else {
+			throw ArgumentError(kind: .missingArgument, errorDescription: "Docker volume not supplied. The Cockpit instance to read from is expected to use a Docker volume for storage.")
+		}
+		
+		guard dockerVolumeExists(volumeName) else {
+			throw PrerequisiteError(errorDescription: "Docker volume '\(dockerVolumeName ?? "<None>")' does not exist. The volume used by Cockpit must be created and named beforehand.")
+		}
+		
+		return volumeName
 	}
 	
 }
