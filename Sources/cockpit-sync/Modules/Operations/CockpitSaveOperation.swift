@@ -1,4 +1,4 @@
-protocol CockpitSaveOperation: CockpitDockerForm, CockpitShellExecutionForm {}
+protocol CockpitSaveOperation: CockpitDockerForm, ShellExecutionForm, ShellAssertionForm {}
 
 extension CockpitSaveOperation {
 
@@ -27,11 +27,10 @@ extension CockpitSaveOperation {
 	func saveCockpitToArchive(for scope: Scope, dockerVolumeName: String) {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: dockerVolumeName)
 		let copyArguments = copyArgumentComponents(for: scope)
-		let containerizedCommands = dockerContainerizedCopyCommands(with: copyArguments)
+		let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
 		
-		for (index, enumeration) in containerizedCommands.enumerated() {
-			let (command, description) = enumeration
-			print("Saving cockpit \(scope.rawValue) to archive, processing \(description), step \(index + 1)/\(containerizedCommands.count).")
+		for (offset, command, description) in copyCommands {
+			print("Saving \(scope.rawValue) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 			
 			let streams = execute("docker run -i --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c '\(command)'")
 			assertShellResult(streams)

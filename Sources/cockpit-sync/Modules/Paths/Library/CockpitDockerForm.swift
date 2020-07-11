@@ -19,12 +19,12 @@ extension CockpitDockerForm {
 	
 	// MARK: Command Form
 	
-	func dockerContainerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
+	func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
 		let copyCommands = arguments.map { arguments -> DescribedCommand in
 			let (sourceComponent, destinationComponent, description) = arguments
 			let source = "\(containerizedCockpitPath)/\(sourceComponent)"
 			let destination = "\(containerizedArchivePath)/\(destinationComponent)"
-			let command = "cp -R \(source) \(destination)"
+			let command = "cp -Rf \(source) \(destination)"
 			
 			return (command, description)
 		}
