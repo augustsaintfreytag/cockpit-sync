@@ -17,7 +17,13 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 	
 	// MARK: Properties
 	
-	var workingDirectoryPath: Path? { execute("pwd")?.outputString }
+	var workingDirectoryPath: Path? {
+		return execute("pwd")?.outputString
+	}
+
+	var expandedArchivePath: Path? {
+		execute("realpath '\(archivePath)'")?.outputString
+	}
 
 	// MARK: Arguments & Options
 
@@ -31,14 +37,21 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 	var dockerVolumeName: String?
 
 	// TODO: Re-establish use of archive directory as variable in all operations.
-	// @Option(name: [.customLong("path"), .customShort("p")], help: "The archive directory used to read and write data.")
-	// var archivePath: String = "./archive"
+	@Option(name: [.customLong("path"), .customShort("p")], help: "The path to the archive directory used to read and write data.")
+	var archivePath: String
+	
+	@Flag(name: [.short, .long], help: "Prints all gathered arguments and exits without performing an operation.")
+	var dryRun: Bool = false
 
 	// MARK: Run
 
-	func run() throws {
-		print("Running with mode '\(mode.rawValue)', scope '\(scope.rawValue)', supplied volume '\(dockerVolumeName)'.")
-
+	mutating func run() throws {
+		print("Running with mode '\(mode.rawValue)', scope '\(scope.rawValue)', archive path '\(archivePath)', volume '\(dockerVolumeName ?? "<None>")'.")
+		
+		guard !dryRun else {
+			return
+		}
+		
 		switch mode {
 		case .clear:
 			runClear()
@@ -50,25 +63,31 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 	}
 	
 	private func runClear() {
-		clearArchiveDirectories(for: scope)
+		clearArchiveDirectories(for: scope, in: archivePath)
 	}
 	
 	private func runSave() throws {
 		let volumeName = try assertDockerVolumeName()
+		let archivePath = expandedArchivePath!
 		
-		clearArchiveDirectories(for: scope)
-		setUpArchiveDirectories(for: scope)
-		saveCockpitToArchive(for: scope, dockerVolumeName: volumeName)
+		print("Expanded archive path '\(archivePath)'.")
+		
+		clearArchiveDirectories(for: scope, in: archivePath)
+		setUpArchiveDirectories(for: scope, in: archivePath)
+		saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
 	private func runRestore() throws {
 		let volumeName = try assertDockerVolumeName()
+		let archivePath = expandedArchivePath!
 		
-		guard archiveDirectoriesExist(for: scope) else {
-			throw PrerequisiteError(errorDescription: "Missing archive directory '\(archiveDirectoryName)' in working directory, can not restore without source.")
+		print("Expanded archive path '\(archivePath)'.")
+		
+		guard archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
+			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
 		}
 		
-		restoreCockpitFromArchive(for: scope, dockerVolumeName: volumeName)
+		restoreCockpitFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
 	// MARK: Prerequisites

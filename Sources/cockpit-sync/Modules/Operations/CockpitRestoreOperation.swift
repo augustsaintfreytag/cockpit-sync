@@ -4,8 +4,8 @@ extension CockpitRestoreOperation {
 	
 	// MARK: Operations
 	
-	func restoreCockpitFromArchive(for scope: Scope, dockerVolumeName: String) {
-		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: dockerVolumeName)
+	func restoreCockpitFromArchive(for scope: Scope, volumeName: String, archivePath: Path) {
+		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		
 		// Directories
 		do {
@@ -43,14 +43,9 @@ extension CockpitRestoreOperation {
 	
 	// MARK: Command Form
 	
-	private func execute(containerized command: String, mounting volumeMountArguments: [String]) -> ShellStandardStreams? {
-		let preparedCommand = containerizedCommand(command, mounting: volumeMountArguments)
-		return execute(preparedCommand)
-	}
-	
 	private func containerizedCommand(_ command: String, mounting volumeMountArguments: [String]) -> String {
 		let insertableVolumeMountArguments = volumeMountArguments.joined(separator: " ")
-		return "docker run --rm \(insertableVolumeMountArguments) alpine sh -c '\(command)'"
+		return "docker run --rm \(insertableVolumeMountArguments) alpine sh -c '\(command)\'"
 	}
 	
 	// MARK: Command Argument Form

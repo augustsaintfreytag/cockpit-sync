@@ -2,16 +2,14 @@ protocol CockpitDirectoryPreparation: CockpitPathForm, ShellExecutionForm {}
 
 extension CockpitDirectoryPreparation {
 	
-	func archiveDirectoriesExist(for scope: Scope) -> Bool {
-		let currentPath = workingDirectoryPath!
+	func archiveDirectoriesExist(for scope: Scope, archivePath: Path) -> Bool {
 		let archiveDirectoryPaths = directoryHierarchyPathComponents(for: scope).map { pathComponent in
-			return "\(currentPath)/\(archiveDirectoryName)/\(pathComponent)"
+			return "\(archivePath)/\(pathComponent)"
 		}
 		
-		print("Checking if archive directories exist for scope '\(scope)', paths: \(archiveDirectoryPaths.map { "'\($0)'" }.joined(separator: ", ")).")
-		
 		for path in archiveDirectoryPaths {
-			guard let result = execute("stat \(path)"), result.hasError == false else {
+			guard let result = execute("stat '\(path)'"), result.hasError == false else {
+				print("Path '\(path)' is missing.")
 				return false
 			}
 		}

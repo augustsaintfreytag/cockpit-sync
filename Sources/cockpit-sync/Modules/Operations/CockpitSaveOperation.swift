@@ -4,19 +4,19 @@ extension CockpitSaveOperation {
 
 	// MARK: Operations
 
-	func setUpArchiveDirectories(for scope: Scope) {
+	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) {
 		let relativePaths = directoryHierarchyPathComponents(for: scope).map { component in
-			return "./\(archiveDirectoryName)/\(component)"
+			return "'\(archivePath)/\(component)'"
 		}
 		
 		let result = execute("mkdir -p \(relativePaths.joined(separator: " "))")
 		assertShellResult(result)
 	}
 	
-	func clearArchiveDirectories(for scope: Scope) {
+	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) {
 		let removalPathComponents = directoryPathComponents(for: scope)
 		let removalCommands = removalPathComponents.map { pathComponent in
-			return "rm -rf ./\(archiveDirectoryName)/\(pathComponent)"
+			return "rm -rf '\(archivePath)/\(pathComponent)'"
 		}
 		
 		let removalCommand = removalCommands.joined(separator: "; ")
@@ -24,15 +24,15 @@ extension CockpitSaveOperation {
 		assertShellResult(shellResult)
 	}
 
-	func saveCockpitToArchive(for scope: Scope, dockerVolumeName: String) {
-		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: dockerVolumeName)
+	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) {
+		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		let copyArguments = copyArgumentComponents(for: scope)
 		let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
 		
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.rawValue) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 			
-			let streams = execute("docker run --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c '\(command)'")
+			let streams = execute("docker run --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c \"\(command)\"")
 			assertShellResult(streams)
 		}
 	}

@@ -1,9 +1,5 @@
 protocol CockpitPathForm: PathForm {
 	
-	// MARK: Path Components
-	
-	var archiveDirectoryName: String { get }
-	
 	// MARK: Paths
 	
 	var workingDirectoryPath: Path? { get }
@@ -15,8 +11,6 @@ protocol CockpitPathForm: PathForm {
 extension CockpitPathForm {
 	
 	// MARK: Paths
-	
-	var archiveDirectoryName: String { "archive.nosync" }
 	
 	var containerizedCockpitPath: Path { "/var/cockpit" }
 	
