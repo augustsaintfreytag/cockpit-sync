@@ -1,4 +1,4 @@
-protocol CockpitShellExecutionForm {}
+protocol CockpitShellExecutionForm: ShellExecutionForm {}
 
 extension CockpitShellExecutionForm {
 	

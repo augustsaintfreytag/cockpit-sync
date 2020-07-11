@@ -1,9 +1,4 @@
-protocol CockpitSaveOperation: CockpitPathForm, CockpitShellExecutionForm {
-	
-	typealias DescribedCommand = (command: String, description: String)
-	typealias CopyArguments = (source: String, destination: String, description: String)
-
-}
+protocol CockpitSaveOperation: CockpitDockerForm, CockpitShellExecutionForm {}
 
 extension CockpitSaveOperation {
 
@@ -31,7 +26,8 @@ extension CockpitSaveOperation {
 
 	func saveCockpitToArchive(for scope: Scope, dockerVolumeName: String) {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: dockerVolumeName)
-		let containerizedCommands = dockerContainerizedCopyCommands(for: scope, dockerVolumeName: dockerVolumeName)
+		let copyArguments = copyArgumentComponents(for: scope)
+		let containerizedCommands = dockerContainerizedCopyCommands(with: copyArguments)
 		
 		for (index, enumeration) in containerizedCommands.enumerated() {
 			let (command, description) = enumeration
@@ -40,28 +36,6 @@ extension CockpitSaveOperation {
 			let streams = execute("docker run -i --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c '\(command)'")
 			assertShellResult(streams)
 		}
-	}
-	
-	private func dockerMountArguments(volumeName dockerVolumeName: String) -> (volume: String, archive: String) {
-		let currentPath = workingDirectoryPath!
-		let volumeMountArgument = "-v '\(dockerVolumeName):\(containerizedCockpitPath):cached'"
-		let archiveMountArgument = "-v '\(currentPath)/\(archiveDirectoryName):\(containerizedArchivePath):cached'"
-		
-		return (volumeMountArgument, archiveMountArgument)
-	}
-	
-	private func dockerContainerizedCopyCommands(for scope: Scope, dockerVolumeName: String) -> [DescribedCommand] {
-		let copyArguments = copyArgumentComponents(for: scope)
-		let copyCommands = copyArguments.map { arguments -> DescribedCommand in
-			let (sourceComponent, destinationComponent, description) = arguments
-			let source = "\(containerizedCockpitPath)/\(sourceComponent)"
-			let destination = "\(containerizedArchivePath)/\(destinationComponent)"
-			let command = "cp -R \(source) \(destination)"
-			
-			return (command, description)
-		}
-		
-		return copyCommands
 	}
 
 	// MARK: Command Argument Form
