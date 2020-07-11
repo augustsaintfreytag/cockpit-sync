@@ -1,4 +1,4 @@
-protocol CockpitPathForm: PathForm, ShellExecutionForm {
+protocol CockpitPathForm: PathForm {
 	
 	// MARK: Path Components
 	
@@ -17,8 +17,6 @@ extension CockpitPathForm {
 	// MARK: Paths
 	
 	var archiveDirectoryName: String { "archive.nosync" }
-	
-	var workingDirectoryPath: Path? { execute("pwd")?.outputString }
 	
 	var containerizedCockpitPath: Path { "/var/cockpit" }
 	

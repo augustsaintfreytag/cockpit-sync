@@ -2,7 +2,9 @@ import Foundation
 import ArgumentParser
 
 struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerPreparation, CockpitSaveOperation {
-
+	
+	// MARK: Configuration
+	
 	static var configuration = CommandConfiguration(
 		abstract: "Saves or restores data of a Cockpit CMS instance.",
 		discussion: lines(
@@ -12,6 +14,10 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 			"allowing synchronization of extracted data with a remote repository."
 		)
 	)
+	
+	// MARK: Properties
+	
+	var workingDirectoryPath: Path? { execute("pwd")?.outputString }
 
 	// MARK: Arguments & Options
 
