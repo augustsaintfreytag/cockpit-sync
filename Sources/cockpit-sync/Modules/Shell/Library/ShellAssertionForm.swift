@@ -1,15 +1,6 @@
-//
-//  CockpitShellForm.swift
-//  cockpit-sync
-//
-//  Created by August Saint Freytag on 10/07/2020.
-//
+protocol ShellAssertionForm {}
 
-import Foundation
-
-protocol CockpitShellProcessForm: ShellProcessForm {}
-
-extension CockpitShellProcessForm {
+extension ShellAssertionForm {
 	
 	// MARK: Assertion
 	

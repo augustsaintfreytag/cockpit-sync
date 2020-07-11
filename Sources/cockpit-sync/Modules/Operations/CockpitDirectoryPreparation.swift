@@ -1,4 +1,4 @@
-protocol CockpitDirectoryPreparation: CockpitPathForm, CockpitShellExecutionForm {}
+protocol CockpitDirectoryPreparation: CockpitPathForm, ShellExecutionForm {}
 
 extension CockpitDirectoryPreparation {
 	
