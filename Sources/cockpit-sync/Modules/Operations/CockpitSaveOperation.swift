@@ -6,16 +6,6 @@ protocol CockpitSaveOperation: CockpitPathForm, CockpitShellExecutionForm {
 }
 
 extension CockpitSaveOperation {
-	
-	// MARK: Paths
-	
-	private var archiveDirectoryName: String { "archive.nosync" }
-	
-	private var workingDirectoryPath: Path? { execute("pwd")?.outputString }
-	
-	private var containerizedCockpitPath: Path { "/var/cockpit" }
-	
-	private var containerizedArchivePath: Path { "/var/archive" }
 
 	// MARK: Operations
 
@@ -84,7 +74,7 @@ extension CockpitSaveOperation {
 		return copyCommands
 	}
 
-	// MARK: Path Form
+	// MARK: Command Argument Form
 
 	private func copyArgumentComponents(for scope: Scope) -> [CopyArguments] {
 		switch scope {

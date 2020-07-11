@@ -1,11 +1,16 @@
-protocol CockpitPathForm {
-	
-	/// A path or path component describing a resource on the local system.
-	typealias Path = String
-	
-}
+protocol CockpitPathForm: PathForm, ShellExecutionForm {}
 
 extension CockpitPathForm {
+	
+	// MARK: Paths
+	
+	var workingDirectoryPath: Path? { execute("pwd")?.outputString }
+	
+	var archiveDirectoryName: String { "archive.nosync" }
+	
+	var containerizedCockpitPath: Path { "/var/cockpit" }
+	
+	var containerizedArchivePath: Path { "/var/archive" }
 	
 	// MARK: Path Form
 	
