@@ -38,6 +38,19 @@ extension CockpitSaveOperation {
 	}
 
 	// MARK: Command Argument Form
+	
+	private func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
+		let copyCommands = arguments.map { arguments -> DescribedCommand in
+			let (sourceComponent, destinationComponent, description) = arguments
+			let source = "\(containerizedCockpitPath)/\(sourceComponent)"
+			let destination = "\(containerizedArchivePath)/\(destinationComponent)"
+			let command = "cp -Rf \(source) \(destination)"
+			
+			return (command, description)
+		}
+		
+		return copyCommands
+	}
 
 	private func copyArgumentComponents(for scope: Scope) -> [CopyArguments] {
 		switch scope {

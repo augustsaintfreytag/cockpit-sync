@@ -55,7 +55,22 @@ extension CockpitRestoreOperation {
 	
 	// MARK: Command Argument Form
 	
-	private var cockpitDirectoryNames: String { "cache collections data uploads thumbs tmp uploads" }
+	private var cockpitDirectoryNames: [String] {
+		["cache", "collections", "data", "uploads", "thumbs", "tmp", "uploads"]
+	}
+	
+	private func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
+		let copyCommands = arguments.map { arguments -> DescribedCommand in
+			let (sourceComponent, destinationComponent, description) = arguments
+			let source = "\(containerizedArchivePath)/\(sourceComponent)"
+			let destination = "\(containerizedCockpitPath)/\(destinationComponent)"
+			let command = "cp -Rf \(source) \(destination)"
+			
+			return (command, description)
+		}
+		
+		return copyCommands
+	}
 	
 	private func copyArgumentComponents(for scope: Scope) -> [CopyArguments] {
 		switch scope {

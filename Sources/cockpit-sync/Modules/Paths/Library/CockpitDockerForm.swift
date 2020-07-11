@@ -17,19 +17,4 @@ extension CockpitDockerForm {
 		return (volumeMountArgument, archiveMountArgument)
 	}
 	
-	// MARK: Command Form
-	
-	func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
-		let copyCommands = arguments.map { arguments -> DescribedCommand in
-			let (sourceComponent, destinationComponent, description) = arguments
-			let source = "\(containerizedCockpitPath)/\(sourceComponent)"
-			let destination = "\(containerizedArchivePath)/\(destinationComponent)"
-			let command = "cp -Rf \(source) \(destination)"
-			
-			return (command, description)
-		}
-		
-		return copyCommands
-	}
-	
 }
