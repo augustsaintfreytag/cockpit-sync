@@ -11,7 +11,7 @@ extension CockpitDockerForm {
 	
 	func dockerMountArguments(volumeName dockerVolumeName: String) -> (volume: String, archive: String) {
 		let currentPath = workingDirectoryPath!
-		let volumeMountArgument = "-v '\(dockerVolumeName):\(containerizedCockpitPath):cached'"
+		let volumeMountArgument = "-v '\(dockerVolumeName):\(containerizedCockpitPath)'"
 		let archiveMountArgument = "-v '\(currentPath)/\(archiveDirectoryName):\(containerizedArchivePath):cached'"
 		
 		return (volumeMountArgument, archiveMountArgument)
