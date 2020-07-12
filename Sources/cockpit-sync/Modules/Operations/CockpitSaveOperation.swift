@@ -1,45 +1,43 @@
-protocol CockpitSaveOperation: CockpitDockerForm, ShellExecutionForm, ShellAssertionForm {}
+/// Functionality for saving maintained structure and data of a Cockpit instance to a destination archive.
+protocol CockpitSaveOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
 
 extension CockpitSaveOperation {
 
 	// MARK: Operations
 
-	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) {
+	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
 		let relativePaths = directoryHierarchyPathComponents(for: scope).map { component in
 			return "'\(archivePath)/\(component)'"
 		}
 		
-		let result = execute("mkdir -p \(relativePaths.joined(separator: " "))")
-		assertShellResult(result)
+		try executeAndAssert("mkdir -p \(relativePaths.joined(separator: " "))")
 	}
 	
-	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) {
+	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
 		let removalPathComponents = directoryPathComponents(for: scope)
 		let removalCommands = removalPathComponents.map { pathComponent in
 			return "rm -rf '\(archivePath)/\(pathComponent)'"
 		}
 		
-		let removalCommand = removalCommands.joined(separator: "; ")
-		let shellResult = execute(removalCommand)
-		assertShellResult(shellResult)
+		let chainedRemovalCommands = removalCommands.joined(separator: "; ")
+		try executeAndAssert(chainedRemovalCommands)
 	}
 
-	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) {
+	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		let copyArguments = copyArgumentComponents(for: scope)
 		let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
 		
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.rawValue) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
-			
-			let streams = execute("docker run --rm \(volumeMountArgument) \(archiveMountArgument) alpine sh -c \"\(command)\"")
-			assertShellResult(streams)
+			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
+			try executeAndAssert(command)
 		}
 	}
 
 	// MARK: Command Argument Form
 	
-	private func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
+	private func containerizedCopyCommands(with arguments: [CopyArgumentPair]) -> [DescribedCommand] {
 		let copyCommands = arguments.map { arguments -> DescribedCommand in
 			let (sourceComponent, destinationComponent, description) = arguments
 			let source = "\(containerizedCockpitPath)/\(sourceComponent)"
@@ -52,7 +50,7 @@ extension CockpitSaveOperation {
 		return copyCommands
 	}
 
-	private func copyArgumentComponents(for scope: Scope) -> [CopyArguments] {
+	private func copyArgumentComponents(for scope: Scope) -> [CopyArgumentPair] {
 		switch scope {
 		case .data:
 			return [

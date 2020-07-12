@@ -17,9 +17,10 @@
 		8BE99D1C24B9B1D900D6DA88 /* CockpitDirectoryPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1A24B9B10900D6DA88 /* CockpitDirectoryPreparation.swift */; };
 		8BE99D1F24B9B52A00D6DA88 /* CockpitDockerPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1D24B9B51D00D6DA88 /* CockpitDockerPreparation.swift */; };
 		8BE99D2124B9B6F100D6DA88 /* CockpitDockerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2024B9B6F100D6DA88 /* CockpitDockerForm.swift */; };
-		8BE99D2324B9C43800D6DA88 /* ShellAssertionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2224B9C43800D6DA88 /* ShellAssertionForm.swift */; };
+		8BE99D2324B9C43800D6DA88 /* ShellAssertedExecutionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2224B9C43800D6DA88 /* ShellAssertedExecutionForm.swift */; };
 		8BE99D2624B9CC4600D6DA88 /* ArgumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2524B9CC4600D6DA88 /* ArgumentError.swift */; };
 		8BE99D2824B9CCC000D6DA88 /* PrerequisiteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2724B9CCC000D6DA88 /* PrerequisiteError.swift */; };
+		8BE99D2A24BAF68F00D6DA88 /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2924BAF68F00D6DA88 /* ExecutionError.swift */; };
 		OBJ_101 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Lines.swift */; };
 		OBJ_102 /* CockpitSaveOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* CockpitSaveOperation.swift */; };
 		OBJ_103 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* main.swift */; };
@@ -80,9 +81,10 @@
 		8BE99D1A24B9B10900D6DA88 /* CockpitDirectoryPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitDirectoryPreparation.swift; sourceTree = "<group>"; };
 		8BE99D1D24B9B51D00D6DA88 /* CockpitDockerPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitDockerPreparation.swift; sourceTree = "<group>"; };
 		8BE99D2024B9B6F100D6DA88 /* CockpitDockerForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitDockerForm.swift; sourceTree = "<group>"; };
-		8BE99D2224B9C43800D6DA88 /* ShellAssertionForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShellAssertionForm.swift; sourceTree = "<group>"; };
+		8BE99D2224B9C43800D6DA88 /* ShellAssertedExecutionForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShellAssertedExecutionForm.swift; sourceTree = "<group>"; };
 		8BE99D2524B9CC4600D6DA88 /* ArgumentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentError.swift; sourceTree = "<group>"; };
 		8BE99D2724B9CCC000D6DA88 /* PrerequisiteError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrerequisiteError.swift; sourceTree = "<group>"; };
+		8BE99D2924BAF68F00D6DA88 /* ExecutionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
 		OBJ_10 /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
 		OBJ_13 /* CockpitSaveOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitSaveOperation.swift; sourceTree = "<group>"; };
 		OBJ_14 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -189,7 +191,7 @@
 		8BE99D1824B9AF3C00D6DA88 /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				8BE99D2224B9C43800D6DA88 /* ShellAssertionForm.swift */,
+				8BE99D2224B9C43800D6DA88 /* ShellAssertedExecutionForm.swift */,
 				8B88C59F24B76B44007E655C /* ShellExecutionForm.swift */,
 			);
 			path = Library;
@@ -207,6 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				8BE99D2524B9CC4600D6DA88 /* ArgumentError.swift */,
+				8BE99D2924BAF68F00D6DA88 /* ExecutionError.swift */,
 				8BE99D2724B9CCC000D6DA88 /* PrerequisiteError.swift */,
 			);
 			path = Errors;
@@ -486,12 +489,13 @@
 				8BE99D0E24B90A3E00D6DA88 /* Arguments.swift in Sources */,
 				8BE99D2624B9CC4600D6DA88 /* ArgumentError.swift in Sources */,
 				8B88C5A024B76B80007E655C /* ShellExecutionForm.swift in Sources */,
+				8BE99D2A24BAF68F00D6DA88 /* ExecutionError.swift in Sources */,
 				8BE99D1224B9A9F500D6DA88 /* CockpitRestoreOperation.swift in Sources */,
 				8BE99D2124B9B6F100D6DA88 /* CockpitDockerForm.swift in Sources */,
 				8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */,
 				8BE99D0824B909D600D6DA88 /* CockpitPathForm.swift in Sources */,
 				8BE99D1624B9AF0600D6DA88 /* PathForm.swift in Sources */,
-				8BE99D2324B9C43800D6DA88 /* ShellAssertionForm.swift in Sources */,
+				8BE99D2324B9C43800D6DA88 /* ShellAssertedExecutionForm.swift in Sources */,
 				OBJ_101 /* Lines.swift in Sources */,
 				8BE99D1F24B9B52A00D6DA88 /* CockpitDockerPreparation.swift in Sources */,
 				OBJ_102 /* CockpitSaveOperation.swift in Sources */,
