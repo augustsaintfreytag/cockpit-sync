@@ -30,7 +30,7 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerP
 	@Argument(help: "The mode of the operation. (options: save|restore)")
 	var mode: Mode
 
-	@Option(name: [.long, .short], help: "The scope of the operation. (options: structure|data|everything)")
+	@Option(name: [.long, .short], help: "The scope of the operation. (options: structure|records|everything)")
 	var scope: Scope = .everything
 	
 	@Option(name: [.customLong("docker-volume"), .customShort("v")], help: "The name of the Docker volume used by Cockpit CMS to store data.")

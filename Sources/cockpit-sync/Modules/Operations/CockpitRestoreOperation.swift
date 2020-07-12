@@ -60,7 +60,7 @@ extension CockpitRestoreOperation {
 	
 	private func copyArgumentComponents(for scope: Scope) -> [CopyArgumentPair] {
 		switch scope {
-		case .data:
+		case .records:
 			return [
 				("data/db/*", "data/", "database"),
 				("data/uploads/*", "uploads/", "files and assets")

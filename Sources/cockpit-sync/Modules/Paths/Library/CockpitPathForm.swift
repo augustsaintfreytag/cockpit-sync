@@ -20,7 +20,7 @@ extension CockpitPathForm {
 	
 	func directoryPathComponents(for scope: Scope) -> [Path] {
 		switch scope {
-		case .data:
+		case .records:
 			return ["data"]
 		case .structure:
 			return ["structure"]
@@ -31,7 +31,7 @@ extension CockpitPathForm {
 	
 	func directoryHierarchyPathComponents(for scope: Scope) -> [Path] {
 		switch scope {
-		case .data:
+		case .records:
 			return ["data/db", "data/uploads"]
 		case .structure:
 			return ["structure/collections"]
