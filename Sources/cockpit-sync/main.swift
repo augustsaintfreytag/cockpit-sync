@@ -10,8 +10,10 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerP
 		discussion: lines(
 			"Handles saving and restoring of internal data stores of Cockpit CMS (getcockpit.com),",
 			"an open source content management system, developed and maintained by Agentejo.",
-			"Additionally offers reading or writing data to and from a destination Git repository,",
-			"allowing synchronization of extracted data with a remote repository."
+			"",
+			"Assumes that Cockpit runs in a Docker container with its own dedicated volume mounted",
+			"at `/var/www/html/storage` inside the container environment. If the targeted Cockpit instance",
+			"runs openly outside of containerization, no special tools are required to save and restore its data."
 		)
 	)
 	
@@ -27,13 +29,13 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerP
 
 	// MARK: Arguments & Options
 
-	@Argument(help: "The mode of the operation. (options: save|restore)")
+	@Argument(help: "The mode of the operation. (options: save|restore|clear)")
 	var mode: Mode
 
 	@Option(name: [.long, .short], help: "The scope of the operation. (options: structure|records|everything)")
 	var scope: Scope = .everything
 	
-	@Option(name: [.customLong("docker-volume"), .customShort("v")], help: "The name of the Docker volume used by Cockpit CMS to store data.")
+	@Option(name: [.customLong("docker-volume"), .customShort("v")], help: "The name of the Docker volume used by Cockpit to store data.")
 	var dockerVolumeName: String?
 
 	@Option(name: [.customLong("path"), .customShort("p")], help: "The path to the archive directory used to read and write data.")
