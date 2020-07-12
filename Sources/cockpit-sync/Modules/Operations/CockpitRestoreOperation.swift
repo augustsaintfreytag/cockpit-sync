@@ -1,4 +1,4 @@
-protocol CockpitRestoreOperation: CockpitDockerForm, ShellExecutionForm, ShellAssertionForm {}
+protocol CockpitRestoreOperation: CockpitDockerForm, ShellExecutionForm, ShellAssertedExecutionForm {}
 
 extension CockpitRestoreOperation {
 	
