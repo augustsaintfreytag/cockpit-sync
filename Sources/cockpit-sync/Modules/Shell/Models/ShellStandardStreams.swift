@@ -1,5 +1,6 @@
 import Foundation
 
+/// Data of standard streams of a child process executed through the system shell.
 struct ShellStandardStreams {
 	
 	// MARK: Properties
@@ -37,7 +38,11 @@ struct ShellStandardStreams {
 		self.errorData = Self.data(from: errorStream)
 	}
 	
-	// MARK: Utility
+}
+
+// MARK: Utility
+
+extension ShellStandardStreams {
 	
 	private static func data(from outputStream: Pipe) -> Data {
 		return outputStream.fileHandleForReading.readDataToEndOfFile()
@@ -52,6 +57,8 @@ struct ShellStandardStreams {
 	}
 	
 }
+
+// MARK: Debug String Form
 
 extension ShellStandardStreams: CustomDebugStringConvertible {
 	
