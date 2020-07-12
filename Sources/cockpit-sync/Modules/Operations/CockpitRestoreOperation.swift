@@ -5,7 +5,7 @@ extension CockpitRestoreOperation {
 	
 	// MARK: Operations
 	
-	func restoreCockpitFromArchive(for scope: Scope, volumeName: String, archivePath: Path) {
+	func restoreCockpitFromArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		
 		// Directories
@@ -16,8 +16,7 @@ extension CockpitRestoreOperation {
 			
 			let containerizedDirectorySetUpCommand = "mkdir -p \(containerizedDirectoryNames.joined(separator: " "))"
 			let command = containerizedCommand(containerizedDirectorySetUpCommand, mounting: [volumeMountArgument])
-			let streams = execute(command)
-			assertShellResult(streams)
+			try executeAndAssert(command)
 		}
 		
 		// Data Copy
@@ -29,16 +28,14 @@ extension CockpitRestoreOperation {
 				print("Restoring \(scope.rawValue) from archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 				
 				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-				let streams = execute(command)
-				assertShellResult(streams)
+				try executeAndAssert(command)
 			}
 		}
 		
 		// Permissions
 		do {
 			let command = containerizedCommand("chown -R xfs:xfs \(containerizedCockpitPath)", mounting: [volumeMountArgument])
-			let streams = execute(command)
-			assertShellResult(streams)
+			try executeAndAssert(command)
 		}
 	}
 	
