@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerPreparation, CockpitSaveOperation, CockpitRestoreOperation {
+struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerPreparation, CockpitSaveOperation, CockpitRestoreOperation {
 	
 	// MARK: Configuration
 	
@@ -41,10 +41,10 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 
 	// MARK: Run
 
-	mutating func run() throws {
+	func run() throws {
 		switch mode {
 		case .clear:
-			runClear()
+			try runClear()
 		case .save:
 			try runSave()
 		case .restore:
@@ -52,17 +52,17 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 		}
 	}
 	
-	private func runClear() {
-		clearArchiveDirectories(for: scope, in: archivePath)
+	private func runClear() throws {
+		try clearArchiveDirectories(for: scope, in: archivePath)
 	}
 	
 	private func runSave() throws {
 		let volumeName = try assertDockerVolumeName()
 		let archivePath = expandedArchivePath!
 		
-		clearArchiveDirectories(for: scope, in: archivePath)
-		setUpArchiveDirectories(for: scope, in: archivePath)
-		saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
+		try clearArchiveDirectories(for: scope, in: archivePath)
+		try setUpArchiveDirectories(for: scope, in: archivePath)
+		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
 	private func runRestore() throws {
@@ -73,7 +73,7 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
 		}
 		
-		restoreCockpitFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
+		try restoreCockpitFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
 	// MARK: Prerequisites
@@ -94,4 +94,4 @@ struct CockpitBackup: ParsableCommand, CockpitDirectoryPreparation, CockpitDocke
 
 // MARK: Entry
 
-CockpitBackup.main()
+CockpitSync.main()
