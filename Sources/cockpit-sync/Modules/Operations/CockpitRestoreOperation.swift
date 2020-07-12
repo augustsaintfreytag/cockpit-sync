@@ -25,7 +25,7 @@ extension CockpitRestoreOperation {
 			let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
 			
 			for (offset, command, description) in copyCommands {
-				print("Restoring \(scope.rawValue) from archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
+				print("Restoring \(scope.description) from archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 				
 				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
 				try executeAndAssert(command)
