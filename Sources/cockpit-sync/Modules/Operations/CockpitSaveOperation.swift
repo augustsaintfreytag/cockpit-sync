@@ -1,4 +1,5 @@
-protocol CockpitSaveOperation: CockpitDockerForm, ShellExecutionForm, ShellAssertedExecutionForm {}
+/// Functionality for saving maintained structure and data of a Cockpit instance to a destination archive.
+protocol CockpitSaveOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
 
 extension CockpitSaveOperation {
 
