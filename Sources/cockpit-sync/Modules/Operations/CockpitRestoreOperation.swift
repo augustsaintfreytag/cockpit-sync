@@ -39,20 +39,13 @@ extension CockpitRestoreOperation {
 		}
 	}
 	
-	// MARK: Command Form
-	
-	private func containerizedCommand(_ command: String, mounting volumeMountArguments: [String]) -> String {
-		let insertableVolumeMountArguments = volumeMountArguments.joined(separator: " ")
-		return "docker run --rm \(insertableVolumeMountArguments) alpine sh -c '\(command)\'"
-	}
-	
 	// MARK: Command Argument Form
 	
 	private var cockpitDirectoryNames: [String] {
 		["cache", "collections", "data", "singleton", "thumbs", "tmp", "uploads"]
 	}
 	
-	private func containerizedCopyCommands(with arguments: [CopyArguments]) -> [DescribedCommand] {
+	private func containerizedCopyCommands(with arguments: [CopyArgumentPair]) -> [DescribedCommand] {
 		let copyCommands = arguments.map { arguments -> DescribedCommand in
 			let (sourceComponent, destinationComponent, description) = arguments
 			let source = "\(containerizedArchivePath)/\(sourceComponent)"
@@ -65,7 +58,7 @@ extension CockpitRestoreOperation {
 		return copyCommands
 	}
 	
-	private func copyArgumentComponents(for scope: Scope) -> [CopyArguments] {
+	private func copyArgumentComponents(for scope: Scope) -> [CopyArgumentPair] {
 		switch scope {
 		case .data:
 			return [
