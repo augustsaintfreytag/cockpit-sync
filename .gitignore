@@ -1,4 +1,5 @@
 .DS_Store
+xcuserdata/
 /.build
 /Packages
-xcuserdata/
+/Releases
