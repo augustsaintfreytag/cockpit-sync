@@ -34,7 +34,7 @@ extension CockpitPathForm {
 		case .records:
 			return ["data/db", "data/uploads"]
 		case .structure:
-			return ["structure/collections"]
+			return ["structure/collections", "structure/singleton"]
 		case .everything:
 			return reduce(allCasesIn: directoryHierarchyPathComponents, excluding: Scope.everything)
 		}
