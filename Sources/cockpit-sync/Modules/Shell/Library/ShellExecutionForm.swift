@@ -6,7 +6,7 @@ extension ShellExecutionForm {
 	
 	// MARK: Process Form
 
-	@discardableResult func execute(_ command: String) -> ShellStandardStreams? {
+	@discardableResult func execute(_ command: String) -> ShellResult? {
 		let process = Process()
 
 		process.executableURL = URL(fileURLWithPath: "/bin/bash")
@@ -25,7 +25,7 @@ extension ShellExecutionForm {
 			return nil
 		}
 
-		return ShellStandardStreams(standardOutput, standardError)
+		return ShellResult(from: process)
 	}
 	
 }
