@@ -24,10 +24,18 @@ extension CockpitDockerForm {
 	/// Forms and returns respective mount arguments for the used Docker volume for Cockpit data
 	/// and the archive directory used as source and destination for synchronization.
 	func dockerMountArguments(volumeName: String, archivePath: Path) -> (volume: String, archive: String) {
-		let volumeMountArgument = "-v '\(volumeName):\(containerizedCockpitPath)'"
-		let archiveMountArgument = "-v '\(archivePath):\(containerizedArchivePath):cached'"
+		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
+		let archiveMountArgument = dockerArchiveMountArgument(archivePath: archivePath)
 		
 		return (volumeMountArgument, archiveMountArgument)
+	}
+
+	func dockerVolumeMountArgument(volumeName: String) -> String {
+		return "-v '\(volumeName):\(containerizedCockpitPath)'"
+	}
+
+	func dockerArchiveMountArgument(archivePath: Path) -> String {
+		return "-v '\(archivePath):\(containerizedArchivePath):cached'"
 	}
 	
 }
