@@ -63,7 +63,15 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerP
 		let archivePath = expandedArchivePath!
 		
 		try clearArchiveDirectories(for: scope, in: archivePath)
+
+		// Archive directories
 		try setUpArchiveDirectories(for: scope, in: archivePath)
+
+		// Cockpit directories
+		if try !cockpitDirectoriesExist(for: scope, volumeName: volumeName) {
+			try setUpCockpitDirectories(for: scope, volumeName: volumeName)
+		}
+
 		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
