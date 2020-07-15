@@ -20,6 +20,7 @@ extension ShellExecutionForm {
 
 		do {
 			try process.run()
+			process.waitUntilExit()
 		} catch {
 			assertionFailure("Could not execute wrapped command '\(command)'. \(error.localizedDescription)")
 			return nil
