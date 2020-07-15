@@ -30,6 +30,7 @@ extension CockpitSaveOperation {
 		
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.description) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
+
 			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
 			try executeAndAssert(command)
 		}
