@@ -13,8 +13,12 @@ extension CockpitRestoreOperation {
 		for (offset, command, description) in copyCommands {
 			print("Restoring \(scope.description) from archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 
-			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-			try executeAndAssert(command)
+			do {
+				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
+				try executeAndAssert(command)
+			} catch {
+				print("Could not save \(description), archived data is either missing, can not be read or volume is unusable.")
+			}
 		}
 	}
 

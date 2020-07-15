@@ -31,8 +31,12 @@ extension CockpitSaveOperation {
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.description) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
 
-			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-			try executeAndAssert(command)
+			do {
+				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
+				try executeAndAssert(command)
+			} catch {
+				print("Could not save \(description), input data is either missing, can not be read or archive directory is unusable.")
+			}
 		}
 	}
 
