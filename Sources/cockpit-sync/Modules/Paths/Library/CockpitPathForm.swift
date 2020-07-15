@@ -1,4 +1,4 @@
-protocol CockpitPathForm: PathForm {
+protocol CockpitPathForm {
 	
 	// MARK: Paths
 	

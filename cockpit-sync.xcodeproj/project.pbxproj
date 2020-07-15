@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8B21BEE824BE4FA40083AC91 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B21BEE624BE4F190083AC91 /* Path.swift */; };
 		8B88C5A024B76B80007E655C /* ShellExecutionForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88C59F24B76B44007E655C /* ShellExecutionForm.swift */; };
 		8B88C5A324B8711B007E655C /* ShellResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88C5A124B870EB007E655C /* ShellResult.swift */; };
 		8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0324B8F22800D6DA88 /* Reduce.swift */; };
 		8BE99D0824B909D600D6DA88 /* CockpitPathForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0624B909A700D6DA88 /* CockpitPathForm.swift */; };
 		8BE99D0E24B90A3E00D6DA88 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */; };
 		8BE99D1224B9A9F500D6DA88 /* CockpitRestoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */; };
-		8BE99D1624B9AF0600D6DA88 /* PathForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1524B9AF0600D6DA88 /* PathForm.swift */; };
 		8BE99D1C24B9B1D900D6DA88 /* CockpitDirectoryPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1A24B9B10900D6DA88 /* CockpitDirectoryPreparation.swift */; };
 		8BE99D1F24B9B52A00D6DA88 /* CockpitDockerPreparation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1D24B9B51D00D6DA88 /* CockpitDockerPreparation.swift */; };
 		8BE99D2124B9B6F100D6DA88 /* CockpitDockerForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2024B9B6F100D6DA88 /* CockpitDockerForm.swift */; };
@@ -71,13 +71,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8B21BEE624BE4F190083AC91 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
 		8B88C59F24B76B44007E655C /* ShellExecutionForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellExecutionForm.swift; sourceTree = "<group>"; };
 		8B88C5A124B870EB007E655C /* ShellResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellResult.swift; sourceTree = "<group>"; };
 		8BE99D0324B8F22800D6DA88 /* Reduce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reduce.swift; sourceTree = "<group>"; };
 		8BE99D0624B909A700D6DA88 /* CockpitPathForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitPathForm.swift; sourceTree = "<group>"; };
 		8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arguments.swift; sourceTree = "<group>"; };
 		8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitRestoreOperation.swift; sourceTree = "<group>"; };
-		8BE99D1524B9AF0600D6DA88 /* PathForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathForm.swift; sourceTree = "<group>"; };
 		8BE99D1A24B9B10900D6DA88 /* CockpitDirectoryPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitDirectoryPreparation.swift; sourceTree = "<group>"; };
 		8BE99D1D24B9B51D00D6DA88 /* CockpitDockerPreparation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitDockerPreparation.swift; sourceTree = "<group>"; };
 		8BE99D2024B9B6F100D6DA88 /* CockpitDockerForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitDockerForm.swift; sourceTree = "<group>"; };
@@ -157,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				OBJ_10 /* Lines.swift */,
+				8B21BEE624BE4F190083AC91 /* Path.swift */,
 				8BE99D0324B8F22800D6DA88 /* Reduce.swift */,
 			);
 			path = Extensions;
@@ -183,7 +184,6 @@
 			children = (
 				8BE99D2024B9B6F100D6DA88 /* CockpitDockerForm.swift */,
 				8BE99D0624B909A700D6DA88 /* CockpitPathForm.swift */,
-				8BE99D1524B9AF0600D6DA88 /* PathForm.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -486,6 +486,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 0;
 			files = (
+				8B21BEE824BE4FA40083AC91 /* Path.swift in Sources */,
 				8BE99D0E24B90A3E00D6DA88 /* Arguments.swift in Sources */,
 				8BE99D2624B9CC4600D6DA88 /* ArgumentError.swift in Sources */,
 				8B88C5A024B76B80007E655C /* ShellExecutionForm.swift in Sources */,
@@ -494,7 +495,6 @@
 				8BE99D2124B9B6F100D6DA88 /* CockpitDockerForm.swift in Sources */,
 				8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */,
 				8BE99D0824B909D600D6DA88 /* CockpitPathForm.swift in Sources */,
-				8BE99D1624B9AF0600D6DA88 /* PathForm.swift in Sources */,
 				8BE99D2324B9C43800D6DA88 /* ShellAssertedExecutionForm.swift in Sources */,
 				OBJ_101 /* Lines.swift in Sources */,
 				8BE99D1F24B9B52A00D6DA88 /* CockpitDockerPreparation.swift in Sources */,
