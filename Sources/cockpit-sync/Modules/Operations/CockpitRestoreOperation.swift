@@ -1,5 +1,5 @@
 /// Functionality for restoring structure and data from a previously prepared archive to a Cockpit instance.
-protocol CockpitRestoreOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
+protocol CockpitRestoreOperation: CockpitDirectoryPreparation {}
 
 extension CockpitRestoreOperation {
 	
@@ -9,14 +9,8 @@ extension CockpitRestoreOperation {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		
 		// Directories
-		do {
-			let containerizedDirectoryNames = cockpitDirectoryNames.map { directoryName in
-				return "\(containerizedCockpitPath)/\(directoryName)"
-			}
-			
-			let containerizedDirectorySetUpCommand = "mkdir -p \(containerizedDirectoryNames.joined(separator: " "))"
-			let command = containerizedCommand(containerizedDirectorySetUpCommand, mounting: [volumeMountArgument])
-			try executeAndAssert(command)
+		if try !cockpitDirectoriesExist(for: scope, volumeName: volumeName) {
+			try setUpCockpitDirectories(for: scope, volumeName: volumeName)
 		}
 		
 		// Data Copy
