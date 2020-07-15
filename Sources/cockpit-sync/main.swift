@@ -70,12 +70,19 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerP
 	private func runRestore() throws {
 		let volumeName = try assertDockerVolumeName()
 		let archivePath = expandedArchivePath!
-		
-		guard archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
+
+		// Archive directories
+		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
 			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
 		}
+
+		// Cockpit directories
+		if try !cockpitDirectoriesExist(for: scope, volumeName: volumeName) {
+			try setUpCockpitDirectories(for: scope, volumeName: volumeName)
+		}
 		
-		try restoreCockpitFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
+		try restoreDataFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
+		try setPermissionsInVolume(volumeName: volumeName)
 	}
 	
 	// MARK: Prerequisites

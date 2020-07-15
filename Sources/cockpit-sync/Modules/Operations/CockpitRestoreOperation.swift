@@ -1,43 +1,30 @@
 /// Functionality for restoring structure and data from a previously prepared archive to a Cockpit instance.
-protocol CockpitRestoreOperation: CockpitDirectoryPreparation {}
+protocol CockpitRestoreOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
 
 extension CockpitRestoreOperation {
 	
 	// MARK: Operations
 	
-	func restoreCockpitFromArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
+	func restoreDataFromArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
-		
-		// Directories
-		if try !cockpitDirectoriesExist(for: scope, volumeName: volumeName) {
-			try setUpCockpitDirectories(for: scope, volumeName: volumeName)
-		}
-		
-		// Data Copy
-		do {
-			let copyArguments = copyArgumentComponents(for: scope)
-			let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
-			
-			for (offset, command, description) in copyCommands {
-				print("Restoring \(scope.description) from archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
-				
-				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-				try executeAndAssert(command)
-			}
-		}
-		
-		// Permissions
-		do {
-			let command = containerizedCommand("chown -R xfs:xfs \(containerizedCockpitPath)", mounting: [volumeMountArgument])
+		let copyArguments = copyArgumentComponents(for: scope)
+		let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
+
+		for (offset, command, description) in copyCommands {
+			print("Restoring \(scope.description) from archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
+
+			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
 			try executeAndAssert(command)
 		}
 	}
+
+	func setPermissionsInVolume(volumeName: String) throws {
+		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
+		let command = containerizedCommand("chown -R xfs:xfs \(containerizedCockpitPath)", mounting: [volumeMountArgument])
+		try executeAndAssert(command)
+	}
 	
 	// MARK: Command Argument Form
-	
-	private var cockpitDirectoryNames: [String] {
-		["cache", "collections", "data", "singleton", "thumbs", "tmp", "uploads"]
-	}
 	
 	private func containerizedCopyCommands(with arguments: [CopyArgumentPair]) -> [DescribedCommand] {
 		let copyCommands = arguments.map { arguments -> DescribedCommand in
