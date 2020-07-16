@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, CockpitDockerPreparation, CockpitSaveOperation, CockpitRestoreOperation {
+struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, DockerVolumePreparationForm, CockpitSaveOperation, CockpitRestoreOperation {
 	
 	// MARK: Configuration
 	

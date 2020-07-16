@@ -1,6 +1,6 @@
-protocol CockpitDockerPreparation: ShellExecutionForm {}
+protocol DockerVolumePreparationForm: ShellExecutionForm {}
 
-extension CockpitDockerPreparation {
+extension DockerVolumePreparationForm {
 	
 	func dockerVolumeExists(_ dockerVolumeName: String) -> Bool {
 		guard let result = execute("docker volume inspect \(dockerVolumeName)"), result.hasError == false else {

@@ -1,12 +1,12 @@
 /// Functionality for saving maintained structure and data of a Cockpit instance to a destination archive.
-protocol CockpitSaveOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
+protocol CockpitSaveOperation: ContainerizedCommandProvider, ShellAssertedExecutionForm {}
 
 extension CockpitSaveOperation {
 
 	// MARK: Operations
 
 	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
-		let relativePaths = directoryHierarchyPathComponents(for: scope).map { component in
+		let relativePaths = archiveDirectoryPaths(for: scope).map { component in
 			return "'\(archivePath)/\(component)'"
 		}
 		
@@ -14,8 +14,8 @@ extension CockpitSaveOperation {
 	}
 	
 	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
-		let removalPathComponents = directoryPathComponents(for: scope)
-		let removalCommands = removalPathComponents.map { pathComponent in
+		let removalPaths = archiveDirectoryPaths(for: scope)
+		let removalCommands = removalPaths.map { pathComponent in
 			return "rm -rf '\(archivePath)/\(pathComponent)'"
 		}
 		
@@ -66,7 +66,7 @@ extension CockpitSaveOperation {
 			return [
 				("collections/*", "structure/collections", "collections"),
 				("singleton/*", "structure/singleton", "singletons"),
-				("api*", "structure/", "API data and credentials")
+				("api*", "structure/api", "API data and credentials")
 			]
 		case .everything:
 			return reduce(allCasesIn: copyArgumentComponents, excluding: Scope.everything)

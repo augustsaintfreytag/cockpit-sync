@@ -1,16 +1,16 @@
-protocol CockpitDirectoryPreparation: ShellAssertedExecutionForm, CockpitDockerForm {}
+protocol CockpitDirectoryPreparation: ShellAssertedExecutionForm, ContainerizedCommandProvider {}
 
 extension CockpitDirectoryPreparation {
 
 	/// Checks if the archive and its subdirectories exist to run an operation in the given scope.
 	func archiveDirectoriesExist(for scope: Scope, archivePath: Path) throws -> Bool {
-		let archiveDirectoryPaths = directoryHierarchyPathComponents(for: scope).map { pathComponent in
+		let paths = archiveDirectoryPaths(for: scope).map { pathComponent in
 			return "'\(archivePath)/\(pathComponent)'"
 		}
 
-		guard let result = execute("stat \(archiveDirectoryPaths.joined(separator: " "))"), !result.hasError else {
+		guard let result = execute("stat \(paths.joined(separator: " "))"), !result.hasError else {
 			throw ExecutionError(
-				errorDescription: "Could not stat archive directories for provided paths in scope '\(scope)'. Checked paths: \(archiveDirectoryPaths.joined(separator: ", "))."
+				errorDescription: "Could not stat archive directories for provided paths in scope '\(scope)'. Checked paths: \(paths.joined(separator: ", "))."
 			)
 		}
 

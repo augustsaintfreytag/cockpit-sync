@@ -1,5 +1,5 @@
 /// Functionality for restoring structure and data from a previously prepared archive to a Cockpit instance.
-protocol CockpitRestoreOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
+protocol CockpitRestoreOperation: ContainerizedCommandProvider, ShellAssertedExecutionForm {}
 
 extension CockpitRestoreOperation {
 	
