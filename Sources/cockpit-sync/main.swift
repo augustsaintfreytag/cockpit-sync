@@ -59,27 +59,22 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	}
 	
 	private func runSave() throws {
-		let volumeName = try assertDockerVolumeName()
+		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 		
 		try clearArchiveDirectories(for: scope, in: archivePath)
-
-		// Archive directories
 		try setUpArchiveDirectories(for: scope, in: archivePath)
-
 		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
 	private func runRestore() throws {
-		let volumeName = try assertDockerVolumeName()
+		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 
-		// Archive directories
 		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
 			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
 		}
 
-		// Cockpit directories
 		if try !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
 			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
 		}
@@ -90,7 +85,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	
 	// MARK: Prerequisites
 	
-	private func assertDockerVolumeName() throws -> String {
+	private func assertVolume() throws -> String {
 		guard let volumeName = dockerVolumeName else {
 			throw ArgumentError(kind: .missingArgument, errorDescription: "Docker volume not supplied. The Cockpit instance to read from is expected to use a Docker volume for storage.")
 		}
