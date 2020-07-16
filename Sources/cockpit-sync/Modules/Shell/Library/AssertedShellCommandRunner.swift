@@ -16,19 +16,6 @@ extension AssertedShellCommandRunner {
 		return result
 	}
 	
-	@available(*, deprecated, message: "Separate execute and assert is no longer supported, use `executeAndAssert(_:)` as a combined operation instead.")
-	@discardableResult func assertShellResult(_ result: ShellResult?) throws -> ShellResult {
-		guard let result = result else {
-			throw ExecutionError(errorDescription: "Command could not be executed.")
-		}
-		
-		if result.hasError {
-			throw ExecutionError(errorDescription: "Command exited with errors. \(result.errorStringDebugDescription)")
-		}
-		
-		return result
-	}
-	
 	// MARK: Description Form
 	
 	private var debugDescriptionCharacterCutoff: Int { 36 }
