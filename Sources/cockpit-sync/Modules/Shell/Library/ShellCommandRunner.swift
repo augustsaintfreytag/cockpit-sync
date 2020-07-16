@@ -1,12 +1,12 @@
 import Foundation
 
-protocol ShellExecutionForm {}
+protocol ShellCommandRunner {}
 
-extension ShellExecutionForm {
+extension ShellCommandRunner {
 	
 	// MARK: Process Form
 
-	@discardableResult func execute(_ command: String) -> ShellStandardStreams? {
+	@discardableResult func runInShell(_ command: String) -> ShellResult? {
 		let process = Process()
 
 		process.executableURL = URL(fileURLWithPath: "/bin/bash")
@@ -20,12 +20,13 @@ extension ShellExecutionForm {
 
 		do {
 			try process.run()
+			process.waitUntilExit()
 		} catch {
 			assertionFailure("Could not execute wrapped command '\(command)'. \(error.localizedDescription)")
 			return nil
 		}
 
-		return ShellStandardStreams(standardOutput, standardError)
+		return ShellResult(from: process)
 	}
 	
 }

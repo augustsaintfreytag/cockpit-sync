@@ -1,28 +1,11 @@
 /// Functionality for saving maintained structure and data of a Cockpit instance to a destination archive.
-protocol CockpitSaveOperation: CockpitDockerForm, ShellAssertedExecutionForm {}
+protocol CockpitSaveOperation: ContainerizedCommandProvider, AssertedShellCommandRunner {}
 
 extension CockpitSaveOperation {
 
 	// MARK: Operations
 
-	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
-		let relativePaths = directoryHierarchyPathComponents(for: scope).map { component in
-			return "'\(archivePath)/\(component)'"
-		}
-		
-		try executeAndAssert("mkdir -p \(relativePaths.joined(separator: " "))")
-	}
-	
-	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
-		let removalPathComponents = directoryPathComponents(for: scope)
-		let removalCommands = removalPathComponents.map { pathComponent in
-			return "rm -rf '\(archivePath)/\(pathComponent)'"
-		}
-		
-		let chainedRemovalCommands = removalCommands.joined(separator: "; ")
-		try executeAndAssert(chainedRemovalCommands)
-	}
-
+	/// Saves all data of the provided scope from a given Docker volume to ab archive directory.
 	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		let copyArguments = copyArgumentComponents(for: scope)
@@ -30,8 +13,13 @@ extension CockpitSaveOperation {
 		
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.description) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
-			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-			try executeAndAssert(command)
+
+			do {
+				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
+				try runInShellAndAssert(command)
+			} catch {
+				print("Could not save \(description), input data is either missing, can not be read or archive directory is unusable.")
+			}
 		}
 	}
 
@@ -61,7 +49,7 @@ extension CockpitSaveOperation {
 			return [
 				("collections/*", "structure/collections", "collections"),
 				("singleton/*", "structure/singleton", "singletons"),
-				("api*", "structure/", "API data and credentials")
+				("api*", "structure/api", "API data and credentials")
 			]
 		case .everything:
 			return reduce(allCasesIn: copyArgumentComponents, excluding: Scope.everything)

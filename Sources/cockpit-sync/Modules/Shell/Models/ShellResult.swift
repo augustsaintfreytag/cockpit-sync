@@ -1,10 +1,11 @@
 import Foundation
 
-/// Data of standard streams of a child process executed through the system shell.
-struct ShellStandardStreams {
-	
+/// Data of termination and standard streams of a child process executed through the system shell.
+struct ShellResult {
+
 	// MARK: Properties
-	
+
+	let status: Int32
 	let outputData: Data
 	let errorData: Data
 	
@@ -28,22 +29,38 @@ struct ShellStandardStreams {
 	
 	// MARK: Init
 	
-	init(_ output: Data, _ error: Data) {
+	init(_ status: Int32, _ output: Data, _ error: Data) {
+		self.status = status
 		self.outputData = output
 		self.errorData = error
 	}
 	
-	init(_ outputStream: Pipe, _ errorStream: Pipe) {
+	init(_ status: Int32, _ outputStream: Pipe, _ errorStream: Pipe) {
+		self.status = status
 		self.outputData = Self.data(from: outputStream)
 		self.errorData = Self.data(from: errorStream)
+	}
+
+	init(from process: Process) {
+		self.status = process.terminationStatus
+		self.outputData = Self.data(fromUncastProcessStream: process.standardOutput)
+		self.errorData = Self.data(fromUncastProcessStream: process.standardError)
 	}
 	
 }
 
 // MARK: Utility
 
-extension ShellStandardStreams {
-	
+extension ShellResult {
+
+	private static func data(fromUncastProcessStream uncastProcessStream: Any?) -> Data {
+		guard let pipe = uncastProcessStream as? Pipe else {
+			return Data()
+		}
+
+		return Self.data(from: pipe)
+	}
+
 	private static func data(from outputStream: Pipe) -> Data {
 		return outputStream.fileHandleForReading.readDataToEndOfFile()
 	}
@@ -60,7 +77,7 @@ extension ShellStandardStreams {
 
 // MARK: Debug String Form
 
-extension ShellStandardStreams: CustomDebugStringConvertible {
+extension ShellResult: CustomDebugStringConvertible {
 	
 	var debugDescription: String {
 		guard errorData.isEmpty else {
@@ -78,7 +95,7 @@ extension ShellStandardStreams: CustomDebugStringConvertible {
 		stringDebugDescription(forPropertyAt: \.errorString)
 	}
 	
-	private func stringDebugDescription(forPropertyAt keyPath: KeyPath<ShellStandardStreams, String?>) -> String {
+	private func stringDebugDescription(forPropertyAt keyPath: KeyPath<ShellResult, String?>) -> String {
 		guard let string = self[keyPath: keyPath] else {
 			return "<Unreadable, \(errorData.count) bytes>"
 		}

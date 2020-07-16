@@ -1,4 +1,4 @@
-protocol CockpitDockerForm: CockpitPathForm {
+protocol ContainerizedCommandProvider: ArchivePathProvider {
 	
 	/// A shell command string and a label-like description of its actions or scope.
 	typealias DescribedCommand = (command: String, description: String)
@@ -8,7 +8,7 @@ protocol CockpitDockerForm: CockpitPathForm {
 	
 }
 
-extension CockpitDockerForm {
+extension ContainerizedCommandProvider {
 	
 	// MARK: Command Form
 	
@@ -19,15 +19,24 @@ extension CockpitDockerForm {
 		return "docker run --rm \(insertableVolumeMountArguments) alpine sh -c '\(command)\'"
 	}
 	
-	// MARK: Argument Form
+	// MARK: Mount Argument Form
 	
-	/// Forms and returns respective mount arguments for the used Docker volume for Cockpit data
-	/// and the archive directory used as source and destination for synchronization.
+	/// Forms and returns respective mount arguments for a Docker volume for Cockpit data and an archive directory.
 	func dockerMountArguments(volumeName: String, archivePath: Path) -> (volume: String, archive: String) {
-		let volumeMountArgument = "-v '\(volumeName):\(containerizedCockpitPath)'"
-		let archiveMountArgument = "-v '\(archivePath):\(containerizedArchivePath):cached'"
+		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
+		let archiveMountArgument = dockerArchiveMountArgument(archivePath: archivePath)
 		
 		return (volumeMountArgument, archiveMountArgument)
+	}
+
+	/// Returns an argument used to mount a Docker volume for Cockpit data to a container.
+	func dockerVolumeMountArgument(volumeName: String) -> String {
+		return "-v '\(volumeName):\(containerizedCockpitPath)'"
+	}
+
+	/// Returns an argument used to mount an archive directory present at the given path to a container.
+	func dockerArchiveMountArgument(archivePath: Path) -> String {
+		return "-v '\(archivePath):\(containerizedArchivePath):cached'"
 	}
 	
 }
