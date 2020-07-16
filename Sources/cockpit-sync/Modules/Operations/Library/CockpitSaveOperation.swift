@@ -5,24 +5,7 @@ extension CockpitSaveOperation {
 
 	// MARK: Operations
 
-	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
-		let relativePaths = archiveDirectoryPaths(for: scope).map { component in
-			return "'\(archivePath)/\(component)'"
-		}
-		
-		try runInShellAndAssert("mkdir -p \(relativePaths.joined(separator: " "))")
-	}
-	
-	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
-		let removalPaths = archiveDirectoryPaths(for: scope)
-		let removalCommands = removalPaths.map { pathComponent in
-			return "rm -rf '\(archivePath)/\(pathComponent)'"
-		}
-		
-		let chainedRemovalCommands = removalCommands.joined(separator: "; ")
-		try runInShellAndAssert(chainedRemovalCommands)
-	}
-
+	/// Saves all data of the provided scope from a given Docker volume to ab archive directory.
 	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		let copyArguments = copyArgumentComponents(for: scope)

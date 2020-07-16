@@ -22,4 +22,24 @@ extension ArchiveDirectoryPreparer {
 		return true
 	}
 
+	/// Create directories required in an archive destination needed to save data of the provided scope.
+	func setUpArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
+		let relativePaths = archiveDirectoryPaths(for: scope).map { component in
+			return "'\(archivePath)/\(component)'"
+		}
+
+		try runInShellAndAssert("mkdir -p \(relativePaths.joined(separator: " "))")
+	}
+
+	/// Clear contents of an archive destination to allow saving new data of the provided scope.
+	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
+		let removalPaths = archiveDirectoryPaths(for: scope)
+		let removalCommands = removalPaths.map { pathComponent in
+			return "rm -rf '\(archivePath)/\(pathComponent)'"
+		}
+
+		let chainedRemovalCommands = removalCommands.joined(separator: "; ")
+		try runInShellAndAssert(chainedRemovalCommands)
+	}
+
 }

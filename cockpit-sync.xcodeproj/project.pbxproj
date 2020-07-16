@@ -164,6 +164,15 @@
 			path = Library;
 			sourceTree = "<group>";
 		};
+		8B21BEEF24C04F250083AC91 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */,
+				OBJ_13 /* CockpitSaveOperation.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
 		8B88C59E24B76B43007E655C /* Shell */ = {
 			isa = PBXGroup;
 			children = (
@@ -250,8 +259,7 @@
 		OBJ_12 /* Operations */ = {
 			isa = PBXGroup;
 			children = (
-				8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */,
-				OBJ_13 /* CockpitSaveOperation.swift */,
+				8B21BEEF24C04F250083AC91 /* Library */,
 			);
 			path = Operations;
 			sourceTree = "<group>";

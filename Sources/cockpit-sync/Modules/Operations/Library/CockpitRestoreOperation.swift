@@ -4,7 +4,8 @@ protocol CockpitRestoreOperation: ContainerizedCommandProvider, AssertedShellCom
 extension CockpitRestoreOperation {
 	
 	// MARK: Operations
-	
+
+	/// Restores all data of the provided scope from a populated archive directory to a given Docker volume.
 	func restoreDataFromArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		let copyArguments = copyArgumentComponents(for: scope)
@@ -22,6 +23,8 @@ extension CockpitRestoreOperation {
 		}
 	}
 
+	/// Recursively sets permissions of in-volume Cockpit storage directories and files
+	/// to be owned by the Docker container default user.
 	func setPermissionsInVolume(volumeName: String) throws {
 		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
 		let command = containerizedCommand("chown -R xfs:xfs \(containerizedCockpitPath)", mounting: [volumeMountArgument])
