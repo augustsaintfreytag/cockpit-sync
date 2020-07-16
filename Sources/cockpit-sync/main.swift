@@ -67,11 +67,6 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		// Archive directories
 		try setUpArchiveDirectories(for: scope, in: archivePath)
 
-		// Cockpit directories
-		if try !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
-			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
-		}
-
 		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
