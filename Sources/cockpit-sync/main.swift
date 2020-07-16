@@ -20,11 +20,11 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, DockerVolumePr
 	// MARK: Properties
 	
 	var workingDirectoryPath: Path? {
-		return execute("pwd")?.outputString
+		return runInShell("pwd")?.outputString
 	}
 
 	var expandedArchivePath: Path? {
-		execute("realpath '\(archivePath)'")?.outputString
+		runInShell("realpath '\(archivePath)'")?.outputString
 	}
 
 	// MARK: Arguments & Options

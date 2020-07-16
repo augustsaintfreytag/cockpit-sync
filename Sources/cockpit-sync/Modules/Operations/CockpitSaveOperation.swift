@@ -1,5 +1,5 @@
 /// Functionality for saving maintained structure and data of a Cockpit instance to a destination archive.
-protocol CockpitSaveOperation: ContainerizedCommandProvider, ShellAssertedExecutionForm {}
+protocol CockpitSaveOperation: ContainerizedCommandProvider, AssertedShellCommandRunner {}
 
 extension CockpitSaveOperation {
 
@@ -10,7 +10,7 @@ extension CockpitSaveOperation {
 			return "'\(archivePath)/\(component)'"
 		}
 		
-		try executeAndAssert("mkdir -p \(relativePaths.joined(separator: " "))")
+		try runInShellAndAssert("mkdir -p \(relativePaths.joined(separator: " "))")
 	}
 	
 	func clearArchiveDirectories(for scope: Scope, in archivePath: Path) throws {
@@ -20,7 +20,7 @@ extension CockpitSaveOperation {
 		}
 		
 		let chainedRemovalCommands = removalCommands.joined(separator: "; ")
-		try executeAndAssert(chainedRemovalCommands)
+		try runInShellAndAssert(chainedRemovalCommands)
 	}
 
 	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
@@ -33,7 +33,7 @@ extension CockpitSaveOperation {
 
 			do {
 				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-				try executeAndAssert(command)
+				try runInShellAndAssert(command)
 			} catch {
 				print("Could not save \(description), input data is either missing, can not be read or archive directory is unusable.")
 			}

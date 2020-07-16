@@ -1,12 +1,12 @@
 import Foundation
 
-protocol ShellExecutionForm {}
+protocol ShellCommandRunner {}
 
-extension ShellExecutionForm {
+extension ShellCommandRunner {
 	
 	// MARK: Process Form
 
-	@discardableResult func execute(_ command: String) -> ShellResult? {
+	@discardableResult func runInShell(_ command: String) -> ShellResult? {
 		let process = Process()
 
 		process.executableURL = URL(fileURLWithPath: "/bin/bash")

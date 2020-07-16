@@ -1,11 +1,11 @@
-protocol ShellAssertedExecutionForm: ShellExecutionForm {}
+protocol AssertedShellCommandRunner: ShellCommandRunner {}
 
-extension ShellAssertedExecutionForm {
+extension AssertedShellCommandRunner {
 	
 	// MARK: Assertion
 	
-	@discardableResult func executeAndAssert(_ command: String) throws -> ShellResult {
-		guard let result = execute(command) else {
+	@discardableResult func runInShellAndAssert(_ command: String) throws -> ShellResult {
+		guard let result = runInShell(command) else {
 			throw ExecutionError(errorDescription: "Command could not be executed.")
 		}
 		

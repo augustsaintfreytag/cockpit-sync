@@ -1,5 +1,5 @@
 /// Functionality for restoring structure and data from a previously prepared archive to a Cockpit instance.
-protocol CockpitRestoreOperation: ContainerizedCommandProvider, ShellAssertedExecutionForm {}
+protocol CockpitRestoreOperation: ContainerizedCommandProvider, AssertedShellCommandRunner {}
 
 extension CockpitRestoreOperation {
 	
@@ -15,7 +15,7 @@ extension CockpitRestoreOperation {
 
 			do {
 				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
-				try executeAndAssert(command)
+				try runInShellAndAssert(command)
 			} catch {
 				print("Could not save \(description), archived data is either missing, can not be read or volume is unusable.")
 			}
@@ -25,7 +25,7 @@ extension CockpitRestoreOperation {
 	func setPermissionsInVolume(volumeName: String) throws {
 		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
 		let command = containerizedCommand("chown -R xfs:xfs \(containerizedCockpitPath)", mounting: [volumeMountArgument])
-		try executeAndAssert(command)
+		try runInShellAndAssert(command)
 	}
 	
 	// MARK: Command Argument Form

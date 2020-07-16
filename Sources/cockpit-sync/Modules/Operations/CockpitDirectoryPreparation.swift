@@ -1,4 +1,4 @@
-protocol CockpitDirectoryPreparation: ShellAssertedExecutionForm, ContainerizedCommandProvider {}
+protocol CockpitDirectoryPreparation: AssertedShellCommandRunner, ContainerizedCommandProvider {}
 
 extension CockpitDirectoryPreparation {
 
@@ -8,7 +8,7 @@ extension CockpitDirectoryPreparation {
 			return "'\(archivePath)/\(pathComponent)'"
 		}
 
-		guard let result = execute("stat \(paths.joined(separator: " "))"), !result.hasError else {
+		guard let result = runInShell("stat \(paths.joined(separator: " "))"), !result.hasError else {
 			throw ExecutionError(
 				errorDescription: "Could not stat archive directories for provided paths in scope '\(scope)'. Checked paths: \(paths.joined(separator: ", "))."
 			)
@@ -27,7 +27,7 @@ extension CockpitDirectoryPreparation {
 		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
 		let command = containerizedCommand("stat \(containerizedDirectoryNames.joined(separator: " "))", mounting: [volumeMountArgument])
 
-		guard let result = execute(command) else {
+		guard let result = runInShell(command) else {
 			throw ExecutionError(
 				errorDescription: "Could not stat in-volume Cockpit directories for provided paths in scope '\(scope)'. Checked paths: \(containerizedDirectoryNames.joined(separator: ", "))."
 			)
@@ -50,7 +50,7 @@ extension CockpitDirectoryPreparation {
 		let containerizedDirectorySetUpCommand = "mkdir -p \(containerizedDirectoryNames.joined(separator: " "))"
 		let command = containerizedCommand(containerizedDirectorySetUpCommand, mounting: [volumeMountArgument])
 
-		try executeAndAssert(command)
+		try runInShellAndAssert(command)
 	}
 
 	// MARK: Command Argument Form
