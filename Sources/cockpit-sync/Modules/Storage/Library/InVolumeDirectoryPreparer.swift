@@ -1,29 +1,11 @@
-protocol CockpitDirectoryPreparation: AssertedShellCommandRunner, ContainerizedCommandProvider {}
+/// Provider for directory operations, name, and path forming functionality for Cockpit storage in-volume.
+protocol InVolumeDirectoryPreparer: AssertedShellCommandRunner, ContainerizedCommandProvider {}
 
-extension CockpitDirectoryPreparation {
-
-	/// Checks if the archive and its subdirectories exist to run an operation in the given scope.
-	func archiveDirectoriesExist(for scope: Scope, archivePath: Path) throws -> Bool {
-		let paths = archiveDirectoryPaths(for: scope).map { pathComponent in
-			return "'\(archivePath)/\(pathComponent)'"
-		}
-
-		guard let result = runInShell("stat \(paths.joined(separator: " "))"), !result.hasError else {
-			throw ExecutionError(
-				errorDescription: "Could not stat archive directories for provided paths in scope '\(scope)'. Checked paths: \(paths.joined(separator: ", "))."
-			)
-		}
-
-		guard !result.hasError else {
-			return false
-		}
-
-		return true
-	}
+extension InVolumeDirectoryPreparer {
 
 	/// Checks if the cockpit root and its subdirectories exist in-volume.
-	func cockpitDirectoriesExist(for scope: Scope, volumeName: String) throws -> Bool {
-		let containerizedDirectoryNames = containerizedCockpitDirectoryNames(for: scope)
+	func inVolumeDirectoriesExist(for scope: Scope, volumeName: String) throws -> Bool {
+		let containerizedDirectoryNames = inVolumeDirectoryPaths(for: scope)
 		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
 		let command = containerizedCommand("stat \(containerizedDirectoryNames.joined(separator: " "))", mounting: [volumeMountArgument])
 
@@ -44,8 +26,8 @@ extension CockpitDirectoryPreparation {
 	///
 	/// Uses `mkdir` command to create directories as needed and gracefully skip the operation
 	/// if any destination directories already exist (returning 0 for such runs).
-	func setUpCockpitDirectories(for scope: Scope, volumeName: String) throws {
-		let containerizedDirectoryNames = containerizedCockpitDirectoryNames(for: scope)
+	func setUpInVolumeDirectories(for scope: Scope, volumeName: String) throws {
+		let containerizedDirectoryNames = inVolumeDirectoryPaths(for: scope)
 		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
 		let containerizedDirectorySetUpCommand = "mkdir -p \(containerizedDirectoryNames.joined(separator: " "))"
 		let command = containerizedCommand(containerizedDirectorySetUpCommand, mounting: [volumeMountArgument])
@@ -53,22 +35,22 @@ extension CockpitDirectoryPreparation {
 		try runInShellAndAssert(command)
 	}
 
-	// MARK: Command Argument Form
+	// MARK: Path Form
 
-	private func containerizedCockpitDirectoryNames(for scope: Scope) -> [String] {
-		return cockpitDirectoryNames(for: scope).map { directoryName in
+	private func inVolumeDirectoryPaths(for scope: Scope) -> [Path] {
+		return inVolumeDirectoryNames(for: scope).map { directoryName in
 			return "'\(containerizedCockpitPath)/\(directoryName)'"
 		}
 	}
 
-	private func cockpitDirectoryNames(for scope: Scope) -> [String] {
+	private func inVolumeDirectoryNames(for scope: Scope) -> [String] {
 		switch scope {
 		case .structure:
 			return ["cache", "collections", "singleton", "tmp"]
 		case .records:
 			return ["data", "thumbs", "uploads"]
 		case .everything:
-			return reduce(allCasesIn: cockpitDirectoryNames, excluding: .everything)
+			return reduce(allCasesIn: inVolumeDirectoryNames, excluding: .everything)
 		}
 	}
 	

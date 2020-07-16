@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, DockerVolumePreparationForm, CockpitSaveOperation, CockpitRestoreOperation {
+struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, ArchiveDirectoryPreparer, CockpitSaveOperation, CockpitRestoreOperation {
 	
 	// MARK: Configuration
 	
@@ -68,8 +68,8 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, DockerVolumePr
 		try setUpArchiveDirectories(for: scope, in: archivePath)
 
 		// Cockpit directories
-		if try !cockpitDirectoriesExist(for: scope, volumeName: volumeName) {
-			try setUpCockpitDirectories(for: scope, volumeName: volumeName)
+		if try !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
+			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
 		}
 
 		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
@@ -85,8 +85,8 @@ struct CockpitSync: ParsableCommand, CockpitDirectoryPreparation, DockerVolumePr
 		}
 
 		// Cockpit directories
-		if try !cockpitDirectoriesExist(for: scope, volumeName: volumeName) {
-			try setUpCockpitDirectories(for: scope, volumeName: volumeName)
+		if try !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
+			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
 		}
 		
 		try restoreDataFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
