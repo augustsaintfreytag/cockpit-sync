@@ -38,7 +38,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	@Option(name: [.customLong("docker-volume"), .customShort("v")], help: "The name of the Docker volume used by Cockpit to store data.")
 	var dockerVolumeName: String?
 
-	@Option(name: [.customLong("path"), .customShort("p")], help: "The path to the archive directory used to read and write data.")
+	@Option(name: [.customLong("archive"), .customShort("a")], help: "The path to the archive directory used to read and write data.")
 	var archivePath: String
 
 	// MARK: Run
