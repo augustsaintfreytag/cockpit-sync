@@ -57,7 +57,7 @@ extension CockpitRestoreOperation {
 			return [
 				("structure/collections/*", "collections/", "collections"),
 				("structure/singleton/*", "singleton/", "singletons"),
-				("structure/api*", "", "API data and credentials")
+				("structure/api/*", "", "API data and credentials")
 			]
 		case .everything:
 			return reduce(allCasesIn: copyArgumentComponents, excluding: Scope.everything)
