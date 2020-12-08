@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "cockpit-backup::cockpit-backup"
-               BuildableName = "cockpit-sync"
-               BlueprintName = "cockpit-sync"
-               ReferencedContainer = "container:cockpit-sync.xcodeproj">
+               BuildableName = "CockpitSync"
+               BlueprintName = "CockpitSync"
+               ReferencedContainer = "container:CockpitSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -39,32 +39,17 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
-      allowLocationSimulation = "YES"
-      consoleMode = "1">
+      allowLocationSimulation = "YES">
       <BuildableProductRunnable
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "cockpit-backup::cockpit-backup"
-            BuildableName = "cockpit-sync"
-            BlueprintName = "cockpit-sync"
-            ReferencedContainer = "container:cockpit-sync.xcodeproj">
+            BuildableName = "CockpitSync"
+            BlueprintName = "CockpitSync"
+            ReferencedContainer = "container:CockpitSync.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "restore"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-v freytag_data_cockpit"
-            isEnabled = "YES">
-         </CommandLineArgument>
-         <CommandLineArgument
-            argument = "-p ./archive.nosync"
-            isEnabled = "YES">
-         </CommandLineArgument>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
       buildConfiguration = "Release"
