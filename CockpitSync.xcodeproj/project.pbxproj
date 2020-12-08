@@ -1,0 +1,464 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 53;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		8B21BEE824BE4FA40083AC91 /* Path.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B21BEE624BE4F190083AC91 /* Path.swift */; };
+		8B21BEEA24C0477D0083AC91 /* ShellCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B21BEE924C0477D0083AC91 /* ShellCommandRunner.swift */; };
+		8B21BEEC24C04C240083AC91 /* ArchiveDirectoryPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B21BEEB24C04C240083AC91 /* ArchiveDirectoryPreparer.swift */; };
+		8B88C5A324B8711B007E655C /* ShellResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88C5A124B870EB007E655C /* ShellResult.swift */; };
+		8BA195332580084F00C26940 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8BA195322580084F00C26940 /* ArgumentParser */; };
+		8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0324B8F22800D6DA88 /* Reduce.swift */; };
+		8BE99D0824B909D600D6DA88 /* ArchivePathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0624B909A700D6DA88 /* ArchivePathProvider.swift */; };
+		8BE99D0E24B90A3E00D6DA88 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */; };
+		8BE99D1224B9A9F500D6DA88 /* CockpitRestoreOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */; };
+		8BE99D1C24B9B1D900D6DA88 /* InVolumeDirectoryPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1A24B9B10900D6DA88 /* InVolumeDirectoryPreparer.swift */; };
+		8BE99D1F24B9B52A00D6DA88 /* VolumePreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D1D24B9B51D00D6DA88 /* VolumePreparer.swift */; };
+		8BE99D2124B9B6F100D6DA88 /* ContainerizedCommandProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2024B9B6F100D6DA88 /* ContainerizedCommandProvider.swift */; };
+		8BE99D2324B9C43800D6DA88 /* AssertedShellCommandRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2224B9C43800D6DA88 /* AssertedShellCommandRunner.swift */; };
+		8BE99D2624B9CC4600D6DA88 /* ArgumentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2524B9CC4600D6DA88 /* ArgumentError.swift */; };
+		8BE99D2824B9CCC000D6DA88 /* PrerequisiteError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2724B9CCC000D6DA88 /* PrerequisiteError.swift */; };
+		8BE99D2A24BAF68F00D6DA88 /* ExecutionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D2924BAF68F00D6DA88 /* ExecutionError.swift */; };
+		OBJ_101 /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_10 /* Lines.swift */; };
+		OBJ_102 /* CockpitSaveOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_13 /* CockpitSaveOperation.swift */; };
+		OBJ_103 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = OBJ_14 /* main.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8B21BEE624BE4F190083AC91 /* Path.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Path.swift; sourceTree = "<group>"; };
+		8B21BEE924C0477D0083AC91 /* ShellCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShellCommandRunner.swift; sourceTree = "<group>"; };
+		8B21BEEB24C04C240083AC91 /* ArchiveDirectoryPreparer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveDirectoryPreparer.swift; sourceTree = "<group>"; };
+		8B88C5A124B870EB007E655C /* ShellResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellResult.swift; sourceTree = "<group>"; };
+		8BE99D0324B8F22800D6DA88 /* Reduce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reduce.swift; sourceTree = "<group>"; };
+		8BE99D0624B909A700D6DA88 /* ArchivePathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePathProvider.swift; sourceTree = "<group>"; };
+		8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arguments.swift; sourceTree = "<group>"; };
+		8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitRestoreOperation.swift; sourceTree = "<group>"; };
+		8BE99D1A24B9B10900D6DA88 /* InVolumeDirectoryPreparer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InVolumeDirectoryPreparer.swift; sourceTree = "<group>"; };
+		8BE99D1D24B9B51D00D6DA88 /* VolumePreparer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VolumePreparer.swift; sourceTree = "<group>"; };
+		8BE99D2024B9B6F100D6DA88 /* ContainerizedCommandProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerizedCommandProvider.swift; sourceTree = "<group>"; };
+		8BE99D2224B9C43800D6DA88 /* AssertedShellCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AssertedShellCommandRunner.swift; sourceTree = "<group>"; };
+		8BE99D2524B9CC4600D6DA88 /* ArgumentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArgumentError.swift; sourceTree = "<group>"; };
+		8BE99D2724B9CCC000D6DA88 /* PrerequisiteError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrerequisiteError.swift; sourceTree = "<group>"; };
+		8BE99D2924BAF68F00D6DA88 /* ExecutionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExecutionError.swift; sourceTree = "<group>"; };
+		OBJ_10 /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
+		OBJ_13 /* CockpitSaveOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CockpitSaveOperation.swift; sourceTree = "<group>"; };
+		OBJ_14 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		"cockpit-backup::cockpit-backup::Product" /* CockpitSync */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; path = CockpitSync; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		OBJ_104 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 0;
+			files = (
+				8BA195332580084F00C26940 /* ArgumentParser in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		8B21BEED24C04C400083AC91 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				8B21BEEE24C04C650083AC91 /* Library */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		8B21BEEE24C04C650083AC91 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8B21BEEB24C04C240083AC91 /* ArchiveDirectoryPreparer.swift */,
+				8BE99D1A24B9B10900D6DA88 /* InVolumeDirectoryPreparer.swift */,
+				8BE99D1D24B9B51D00D6DA88 /* VolumePreparer.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8B21BEEF24C04F250083AC91 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D1124B9A9F500D6DA88 /* CockpitRestoreOperation.swift */,
+				OBJ_13 /* CockpitSaveOperation.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8B88C59E24B76B43007E655C /* Shell */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D1824B9AF3C00D6DA88 /* Library */,
+				8BE99D1924B9AF4000D6DA88 /* Models */,
+			);
+			path = Shell;
+			sourceTree = "<group>";
+		};
+		8BE99D0924B909F000D6DA88 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_10 /* Lines.swift */,
+				8B21BEE624BE4F190083AC91 /* Path.swift */,
+				8BE99D0324B8F22800D6DA88 /* Reduce.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		8BE99D0A24B909FB00D6DA88 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8BE99D1324B9AEF600D6DA88 /* Paths */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D1424B9AEFF00D6DA88 /* Library */,
+			);
+			path = Paths;
+			sourceTree = "<group>";
+		};
+		8BE99D1424B9AEFF00D6DA88 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D0624B909A700D6DA88 /* ArchivePathProvider.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8BE99D1824B9AF3C00D6DA88 /* Library */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D2224B9C43800D6DA88 /* AssertedShellCommandRunner.swift */,
+				8BE99D2024B9B6F100D6DA88 /* ContainerizedCommandProvider.swift */,
+				8B21BEE924C0477D0083AC91 /* ShellCommandRunner.swift */,
+			);
+			path = Library;
+			sourceTree = "<group>";
+		};
+		8BE99D1924B9AF4000D6DA88 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				8B88C5A124B870EB007E655C /* ShellResult.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8BE99D2424B9CB4300D6DA88 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D2524B9CC4600D6DA88 /* ArgumentError.swift */,
+				8BE99D2924BAF68F00D6DA88 /* ExecutionError.swift */,
+				8BE99D2724B9CCC000D6DA88 /* PrerequisiteError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		OBJ_11 /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_9 /* Common */,
+				OBJ_12 /* Operations */,
+				8BE99D1324B9AEF600D6DA88 /* Paths */,
+				8B88C59E24B76B43007E655C /* Shell */,
+				8B21BEED24C04C400083AC91 /* Storage */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		OBJ_12 /* Operations */ = {
+			isa = PBXGroup;
+			children = (
+				8B21BEEF24C04F250083AC91 /* Library */,
+			);
+			path = Operations;
+			sourceTree = "<group>";
+		};
+		OBJ_15 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Tests;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_5 = {
+			isa = PBXGroup;
+			children = (
+				OBJ_7 /* Sources */,
+				OBJ_15 /* Tests */,
+				OBJ_56 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		OBJ_56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				"cockpit-backup::cockpit-backup::Product" /* CockpitSync */,
+			);
+			name = Products;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		OBJ_7 /* Sources */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_8 /* CockpitSync */,
+			);
+			name = Sources;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_8 /* CockpitSync */ = {
+			isa = PBXGroup;
+			children = (
+				OBJ_11 /* Modules */,
+				OBJ_14 /* main.swift */,
+			);
+			name = CockpitSync;
+			path = Sources/CockpitSync;
+			sourceTree = SOURCE_ROOT;
+		};
+		OBJ_9 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				8BE99D2424B9CB4300D6DA88 /* Errors */,
+				8BE99D0924B909F000D6DA88 /* Extensions */,
+				8BE99D0A24B909FB00D6DA88 /* Library */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		"cockpit-backup::cockpit-backup" /* CockpitSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = OBJ_97 /* Build configuration list for PBXNativeTarget "CockpitSync" */;
+			buildPhases = (
+				OBJ_100 /* Sources */,
+				OBJ_104 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CockpitSync;
+			packageProductDependencies = (
+				8BA195322580084F00C26940 /* ArgumentParser */,
+			);
+			productName = cockpit_backup;
+			productReference = "cockpit-backup::cockpit-backup::Product" /* CockpitSync */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		OBJ_1 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftMigration = 9999;
+				LastUpgradeCheck = 9999;
+			};
+			buildConfigurationList = OBJ_2 /* Build configuration list for PBXProject "CockpitSync" */;
+			compatibilityVersion = "Xcode 11.4";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = OBJ_5;
+			packageReferences = (
+				8BA195312580084F00C26940 /* XCRemoteSwiftPackageReference "swift-argument-parser" */,
+			);
+			productRefGroup = OBJ_56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				"cockpit-backup::cockpit-backup" /* CockpitSync */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		OBJ_100 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 0;
+			files = (
+				8B21BEE824BE4FA40083AC91 /* Path.swift in Sources */,
+				8BE99D0E24B90A3E00D6DA88 /* Arguments.swift in Sources */,
+				8BE99D2624B9CC4600D6DA88 /* ArgumentError.swift in Sources */,
+				8B21BEEC24C04C240083AC91 /* ArchiveDirectoryPreparer.swift in Sources */,
+				8B21BEEA24C0477D0083AC91 /* ShellCommandRunner.swift in Sources */,
+				8BE99D2A24BAF68F00D6DA88 /* ExecutionError.swift in Sources */,
+				8BE99D1224B9A9F500D6DA88 /* CockpitRestoreOperation.swift in Sources */,
+				8BE99D2124B9B6F100D6DA88 /* ContainerizedCommandProvider.swift in Sources */,
+				8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */,
+				8BE99D0824B909D600D6DA88 /* ArchivePathProvider.swift in Sources */,
+				8BE99D2324B9C43800D6DA88 /* AssertedShellCommandRunner.swift in Sources */,
+				OBJ_101 /* Lines.swift in Sources */,
+				8BE99D1F24B9B52A00D6DA88 /* VolumePreparer.swift in Sources */,
+				OBJ_102 /* CockpitSaveOperation.swift in Sources */,
+				8BE99D1C24B9B1D900D6DA88 /* InVolumeDirectoryPreparer.swift in Sources */,
+				OBJ_103 /* main.swift in Sources */,
+				8BE99D2824B9CCC000D6DA88 /* PrerequisiteError.swift in Sources */,
+				8B88C5A324B8711B007E655C /* ShellResult.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		OBJ_3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_NS_ASSERTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+					"DEBUG=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "linux macosx";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE DEBUG";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				USE_HEADERMAP = NO;
+			};
+			name = Debug;
+		};
+		OBJ_4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_OPTIMIZATION_LEVEL = s;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"SWIFT_PACKAGE=1",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_SWIFT_FLAGS = "$(inherited) -DXcode";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SUPPORTED_PLATFORMS = "linux macosx";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) SWIFT_PACKAGE";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				USE_HEADERMAP = NO;
+			};
+			name = Release;
+		};
+		OBJ_98 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "cockpit-backup.xcodeproj/cockpit_backup_Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+					"@executable_path",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_NAME = CockpitSync;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = "cockpit-sync";
+			};
+			name = Debug;
+		};
+		OBJ_99 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PLATFORM_DIR)/Developer/Library/Frameworks",
+				);
+				HEADER_SEARCH_PATHS = "$(inherited)";
+				INFOPLIST_FILE = "cockpit-backup.xcodeproj/cockpit_backup_Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(TOOLCHAIN_DIR)/usr/lib/swift/macosx",
+					"@executable_path",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				OTHER_CFLAGS = "$(inherited)";
+				OTHER_LDFLAGS = "$(inherited)";
+				OTHER_SWIFT_FLAGS = "$(inherited)";
+				PRODUCT_NAME = CockpitSync;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited)";
+				SWIFT_FORCE_DYNAMIC_LINK_STDLIB = YES;
+				SWIFT_FORCE_STATIC_LINK_STDLIB = NO;
+				SWIFT_VERSION = 5.0;
+				TARGET_NAME = "cockpit-sync";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		OBJ_2 /* Build configuration list for PBXProject "CockpitSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_3 /* Debug */,
+				OBJ_4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		OBJ_97 /* Build configuration list for PBXNativeTarget "CockpitSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				OBJ_98 /* Debug */,
+				OBJ_99 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8BA195312580084F00C26940 /* XCRemoteSwiftPackageReference "swift-argument-parser" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-argument-parser";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.3.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8BA195322580084F00C26940 /* ArgumentParser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BA195312580084F00C26940 /* XCRemoteSwiftPackageReference "swift-argument-parser" */;
+			productName = ArgumentParser;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = OBJ_1 /* Project object */;
+}

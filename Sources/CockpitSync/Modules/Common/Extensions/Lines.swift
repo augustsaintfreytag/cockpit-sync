@@ -1,3 +1,3 @@
 func lines(_ strings: String...) -> String {
-	return strings.joined(separator: "\n")
+	return strings.joined(separator: " ")
 }
