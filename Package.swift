@@ -20,6 +20,9 @@ let package = Package(
 			name: "CockpitSync",
 			dependencies: [
 				.product(name: "ArgumentParser", package: "swift-argument-parser")
+			],
+			swiftSettings: [
+				.define("DEBUG", BuildSettingCondition.when(configuration: BuildConfiguration.debug))
 			]
 		)
 	]

@@ -6,10 +6,10 @@ enum Manifest {
 	static let debugVersion =  "\(releaseVersion) Debug Preview"
 	
 	static var versionDescription: String {
-		#if RELEASE
-		return releaseVersion
-		#else
+		#if DEBUG
 		return debugVersion
+		#else
+		return releaseVersion
 		#endif
 	}
 	
