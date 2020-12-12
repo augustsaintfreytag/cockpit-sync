@@ -41,6 +41,9 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 
 	@Option(name: [.customLong("archive"), .customShort("a")], help: "The path to the archive directory used to read and write data.")
 	var archivePath: String
+	
+	@Flag(name: [.short, .long], help: "Force save or restore operations even if not all directories are present.")
+	var force: Bool = false
 
 	// MARK: Run
 
@@ -73,8 +76,12 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 
-		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
-			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
+		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) || force else {
+			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist or is missing directories. Use '-f' or '--force' to restore with missing sources.")
+		}
+		
+		if !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
+			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
 		}
 		
 		try restoreDataFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
