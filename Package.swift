@@ -7,7 +7,7 @@ let package = Package(
 	name: "CockpitSync",
 	platforms: [
 		// .linux — Support implicitly provided by default.
-		.macOS(.v10_15)
+		.macOS(.v10_13)
 	],
 	dependencies: [
 		// Dependencies declare other packages that this package depends on.
