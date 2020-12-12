@@ -75,10 +75,6 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
 			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
 		}
-
-		if !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
-			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
-		}
 		
 		try restoreDataFromArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 		try setPermissionsInVolume(volumeName: volumeName)
