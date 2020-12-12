@@ -61,3 +61,7 @@ A save or restore mode command can be run with a specifier for what kind of data
 The setting `structure` only touches the form-giving data Cockpit uses, collection/table definitions and their formats. Copying only structure data into the volume of a new Cockpit installation would be usable but not contain any data. Copying only structural information without anything else to update the format specific data models have is possible, though the effects of data orphaned in the process is unknown.
 
 The setting `records` only touches user-input data, including the data inside collections, uploaded and organised assets, as well as authentication data, keys, and preferences. Copying only records without also updating structure is the recommended default mode for automatic pull updates.
+
+## Migration
+
+When first adopting *Cockpit Sync* or migrating from a different synchronisation solution, some directories may be missing. For saving — when expected folders aren’t in place inside the volume — this can be disregarded. For the opposite direction, when restoring from an archive to the volume, the operation fails if expected directories are missing. To confirm that the state of the given archive directory should be used as-is anyway, the operation can be forced with the `-f` or the `—force` flag.
