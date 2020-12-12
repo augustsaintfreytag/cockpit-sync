@@ -26,9 +26,9 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	var expandedArchivePath: Path? {
 		runInShell("realpath '\(archivePath)'")?.outputString
 	}
-
+	
 	// MARK: Arguments & Options
-
+	
 	@Argument(help: "The mode of the operation. (options: save|restore|clear)")
 	var mode: Mode
 
@@ -44,21 +44,22 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	// MARK: Run
 
 	func run() throws {
+		// Mode
 		switch mode {
 		case .clear:
-			try runClear()
+			try runModeClear()
 		case .save:
-			try runSave()
+			try runModeSave()
 		case .restore:
-			try runRestore()
+			try runModeRestore()
 		}
 	}
 	
-	private func runClear() throws {
+	private func runModeClear() throws {
 		try clearArchiveDirectories(for: scope, in: archivePath)
 	}
 	
-	private func runSave() throws {
+	private func runModeSave() throws {
 		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 		
@@ -67,7 +68,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
-	private func runRestore() throws {
+	private func runModeRestore() throws {
 		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 
