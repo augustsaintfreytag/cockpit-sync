@@ -12,6 +12,7 @@
 		8B21BEEC24C04C240083AC91 /* ArchiveDirectoryPreparer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B21BEEB24C04C240083AC91 /* ArchiveDirectoryPreparer.swift */; };
 		8B88C5A324B8711B007E655C /* ShellResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B88C5A124B870EB007E655C /* ShellResult.swift */; };
 		8BA195332580084F00C26940 /* ArgumentParser in Frameworks */ = {isa = PBXBuildFile; productRef = 8BA195322580084F00C26940 /* ArgumentParser */; };
+		8BB80BFF2584D8B700CB3294 /* Manifest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BB80BFE2584D8B700CB3294 /* Manifest.swift */; };
 		8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0324B8F22800D6DA88 /* Reduce.swift */; };
 		8BE99D0824B909D600D6DA88 /* ArchivePathProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0624B909A700D6DA88 /* ArchivePathProvider.swift */; };
 		8BE99D0E24B90A3E00D6DA88 /* Arguments.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */; };
@@ -33,6 +34,7 @@
 		8B21BEE924C0477D0083AC91 /* ShellCommandRunner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShellCommandRunner.swift; sourceTree = "<group>"; };
 		8B21BEEB24C04C240083AC91 /* ArchiveDirectoryPreparer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchiveDirectoryPreparer.swift; sourceTree = "<group>"; };
 		8B88C5A124B870EB007E655C /* ShellResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShellResult.swift; sourceTree = "<group>"; };
+		8BB80BFE2584D8B700CB3294 /* Manifest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manifest.swift; sourceTree = "<group>"; };
 		8BE99D0324B8F22800D6DA88 /* Reduce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reduce.swift; sourceTree = "<group>"; };
 		8BE99D0624B909A700D6DA88 /* ArchivePathProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArchivePathProvider.swift; sourceTree = "<group>"; };
 		8BE99D0D24B90A3E00D6DA88 /* Arguments.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Arguments.swift; sourceTree = "<group>"; };
@@ -96,6 +98,14 @@
 				8BE99D1924B9AF4000D6DA88 /* Models */,
 			);
 			path = Shell;
+			sourceTree = "<group>";
+		};
+		8BB80BFC2584D83200CB3294 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				8BB80BFE2584D8B700CB3294 /* Manifest.swift */,
+			);
+			path = Application;
 			sourceTree = "<group>";
 		};
 		8BE99D0924B909F000D6DA88 /* Extensions */ = {
@@ -215,6 +225,7 @@
 		OBJ_8 /* CockpitSync */ = {
 			isa = PBXGroup;
 			children = (
+				8BB80BFC2584D83200CB3294 /* Application */,
 				OBJ_11 /* Modules */,
 				OBJ_14 /* main.swift */,
 			);
@@ -294,6 +305,7 @@
 				8B21BEEC24C04C240083AC91 /* ArchiveDirectoryPreparer.swift in Sources */,
 				8B21BEEA24C0477D0083AC91 /* ShellCommandRunner.swift in Sources */,
 				8BE99D2A24BAF68F00D6DA88 /* ExecutionError.swift in Sources */,
+				8BB80BFF2584D8B700CB3294 /* Manifest.swift in Sources */,
 				8BE99D1224B9A9F500D6DA88 /* CockpitRestoreOperation.swift in Sources */,
 				8BE99D2124B9B6F100D6DA88 /* ContainerizedCommandProvider.swift in Sources */,
 				8BE99D0524B8F2AD00D6DA88 /* Reduce.swift in Sources */,
