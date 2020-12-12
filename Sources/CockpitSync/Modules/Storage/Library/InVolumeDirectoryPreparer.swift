@@ -4,18 +4,17 @@ protocol InVolumeDirectoryPreparer: AssertedShellCommandRunner, ContainerizedCom
 extension InVolumeDirectoryPreparer {
 
 	/// Checks if the cockpit root and its subdirectories exist in-volume.
-	func inVolumeDirectoriesExist(for scope: Scope, volumeName: String) throws -> Bool {
+	///
+	/// Consumes all errors, returns `true` if directories can all be
+	/// confirmed, `false` if either one or more can not be checked
+	/// for file system stats or if the command to check stats has failed.
+	func inVolumeDirectoriesExist(for scope: Scope, volumeName: String) -> Bool {
 		let containerizedDirectoryNames = inVolumeDirectoryPaths(for: scope)
 		let volumeMountArgument = dockerVolumeMountArgument(volumeName: volumeName)
 		let command = containerizedCommand("stat \(containerizedDirectoryNames.joined(separator: " "))", mounting: [volumeMountArgument])
 
-		guard let result = runInShell(command) else {
-			throw ExecutionError(
-				errorDescription: "Could not stat in-volume Cockpit directories for provided paths in scope '\(scope)'. Checked paths: \(containerizedDirectoryNames.joined(separator: ", "))."
-			)
-		}
-
-		guard !result.hasError else {
+		guard let result = runInShell(command), !result.hasError else {
+			print("Could not stat in-volume Cockpit directories for provided paths in scope '\(scope)'. Checked paths: \(containerizedDirectoryNames.joined(separator: ", ")).")
 			return false
 		}
 

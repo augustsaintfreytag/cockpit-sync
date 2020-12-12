@@ -14,7 +14,8 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 			"Assumes that Cockpit runs in a Docker container with its own dedicated volume mounted",
 			"at `/var/www/html/storage` inside the container environment. If the targeted Cockpit instance",
 			"runs openly outside of containerization, no special tools are required to save and restore its data."
-		)
+		),
+		version: "\(Manifest.name), Version \(Manifest.versionDescription)"
 	)
 	
 	// MARK: Properties
@@ -26,9 +27,9 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	var expandedArchivePath: Path? {
 		runInShell("realpath '\(archivePath)'")?.outputString
 	}
-
+	
 	// MARK: Arguments & Options
-
+	
 	@Argument(help: "The mode of the operation. (options: save|restore|clear)")
 	var mode: Mode
 
@@ -40,25 +41,29 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 
 	@Option(name: [.customLong("archive"), .customShort("a")], help: "The path to the archive directory used to read and write data.")
 	var archivePath: String
+	
+	@Flag(name: [.short, .long], help: "Force save or restore operations even if not all directories are present.")
+	var force: Bool = false
 
 	// MARK: Run
 
 	func run() throws {
+		// Mode
 		switch mode {
 		case .clear:
-			try runClear()
+			try runModeClear()
 		case .save:
-			try runSave()
+			try runModeSave()
 		case .restore:
-			try runRestore()
+			try runModeRestore()
 		}
 	}
 	
-	private func runClear() throws {
+	private func runModeClear() throws {
 		try clearArchiveDirectories(for: scope, in: archivePath)
 	}
 	
-	private func runSave() throws {
+	private func runModeSave() throws {
 		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 		
@@ -67,15 +72,15 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		try saveCockpitToArchive(for: scope, volumeName: volumeName, archivePath: archivePath)
 	}
 	
-	private func runRestore() throws {
+	private func runModeRestore() throws {
 		let volumeName = try assertVolume()
 		let archivePath = expandedArchivePath!
 
-		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
-			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist, can not restore without source.")
+		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) || force else {
+			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist or is missing directories. Use '-f' or '--force' to restore with missing sources.")
 		}
-
-		if try !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
+		
+		if !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
 			try setUpInVolumeDirectories(for: scope, volumeName: volumeName)
 		}
 		

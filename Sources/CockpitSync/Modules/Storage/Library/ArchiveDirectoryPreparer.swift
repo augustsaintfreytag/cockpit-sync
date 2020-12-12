@@ -9,7 +9,7 @@ extension ArchiveDirectoryPreparer {
 			return "'\(archivePath)/\(pathComponent)'"
 		}
 
-		guard let result = runInShell("stat \(paths.joined(separator: " "))"), !result.hasError else {
+		guard let result = runInShell("stat \(paths.joined(separator: " "))") else {
 			throw ExecutionError(
 				errorDescription: "Could not stat archive directories for provided paths in scope '\(scope)'. Checked paths: \(paths.joined(separator: ", "))."
 			)
