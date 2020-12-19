@@ -20,7 +20,7 @@ extension CockpitSaveOperation {
 			do {
 				try runInShellAndAssert(command)
 			} catch {
-				print("Could not save \(description), input data is either missing, can not be read or archive directory is unusable.")
+				print("Could not save \(description). \(error.localizedDescription)")
 			}
 		}
 	}
