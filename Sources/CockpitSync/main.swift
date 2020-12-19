@@ -65,7 +65,10 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	
 	private func runModeSave() throws {
 		let volumeName = try assertVolume()
-		let archivePath = expandedArchivePath!
+		
+		guard let archivePath = canonicalArchivePath else {
+			throw PrerequisiteError(errorDescription: "Archive path can not be determined or canonically resolved.")
+		}
 		
 		try clearArchiveDirectories(for: scope, in: archivePath)
 		try setUpArchiveDirectories(for: scope, in: archivePath)
