@@ -24,7 +24,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		return runInShell("pwd")?.outputString
 	}
 
-	var expandedArchivePath: Path? {
+	var canonicalArchivePath: Path? {
 		resolvedCanonicalPath(from: archivePath)
 	}
 	
@@ -74,7 +74,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	
 	private func runModeRestore() throws {
 		let volumeName = try assertVolume()
-		let archivePath = expandedArchivePath!
+		let archivePath = canonicalArchivePath!
 
 		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) || force else {
 			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist or is missing directories. Use '-f' or '--force' to restore with missing sources.")
