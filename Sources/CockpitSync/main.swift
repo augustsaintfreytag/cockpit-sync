@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, ArchiveDirectoryPreparer, CockpitSaveOperation, CockpitRestoreOperation {
+struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, ArchiveDirectoryPreparer, CockpitSaveOperation, CockpitRestoreOperation, CanonicalPathProvider {
 	
 	// MARK: Configuration
 	
@@ -25,7 +25,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	}
 
 	var expandedArchivePath: Path? {
-		runInShell("realpath '\(archivePath)'")?.outputString
+		resolvedCanonicalPath(from: archivePath)
 	}
 	
 	// MARK: Arguments & Options
