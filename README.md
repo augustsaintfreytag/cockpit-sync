@@ -12,6 +12,10 @@ Swift applications can be run as-is without the need for special runtimes on mac
 
 Running the utility on Linux distributions requires Swift and its core libs to be installed ([swift.org/download](https://swift.org/download)) and are usually not included by default. The recommended path to place shared libraries in is at `/usr/lib/swift`. The core library specifically, for instance, would then be found at `/usr/lib/swift/linux/libswiftCore.so`.
 
+# Special Requirements
+
+Versions 1.1.0 and older rely on `realpath` to be available on the host system. Not having the command available causes archive directories to be assumed to be relative to file system root `/`, which in most cases prevents any reasonable use. In the case of macOS, this means having to install `coreutils` through a package manager like `brew`.
+
 # Environments
 
 As an alternative to setting up prerequisites on the target system, Docker can be used to run *Cockpit Sync* without having to install any packages — even though the utility uses Docker itself to read and write files maintained by Cockpit already.
