@@ -1,7 +1,7 @@
 import Foundation
 import ArgumentParser
 
-struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, ArchiveDirectoryPreparer, CockpitSaveOperation, CockpitRestoreOperation {
+struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, ArchiveDirectoryPreparer, CockpitSaveOperation, CockpitRestoreOperation, CanonicalPathProvider {
 	
 	// MARK: Configuration
 	
@@ -24,13 +24,13 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 		return runInShell("pwd")?.outputString
 	}
 
-	var expandedArchivePath: Path? {
-		runInShell("realpath '\(archivePath)'")?.outputString
+	var canonicalArchivePath: Path? {
+		resolvedCanonicalPath(from: archivePath)
 	}
 	
 	// MARK: Arguments & Options
 	
-	@Argument(help: "The mode of the operation. (options: save|restore|clear)")
+	@Argument(help: "The mode of the operation. (run options: save|restore|clear, validation options: probeArchive|probeVolume)")
 	var mode: Mode
 
 	@Option(name: [.long, .short], help: "The scope of the operation. (options: structure|records|everything)")
@@ -56,6 +56,26 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 			try runModeSave()
 		case .restore:
 			try runModeRestore()
+		case .probeArchive:
+			guard let archivePath = canonicalArchivePath else {
+				throw PrerequisiteError(errorDescription: "Archive path can not be determined or canonically resolved.")
+			}
+			
+			guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) else {
+				throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' may exist but expected subdirectories are missing.")
+			}
+			
+			print("Archive path '\(archivePath)' and all expected subdirectories exists.")
+		case .probeVolume:
+			guard let dockerVolumeName = dockerVolumeName else {
+				throw PrerequisiteError(errorDescription: "Missing argument for Docker volume name.")
+			}
+			
+			guard dockerVolumeExists(dockerVolumeName) else {
+				throw PrerequisiteError(errorDescription: "Docker volume '\(dockerVolumeName)' does not exist.")
+			}
+			
+			print("Docker volume '\(dockerVolumeName)' exists.")
 		}
 	}
 	
@@ -65,7 +85,10 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	
 	private func runModeSave() throws {
 		let volumeName = try assertVolume()
-		let archivePath = expandedArchivePath!
+		
+		guard let archivePath = canonicalArchivePath else {
+			throw PrerequisiteError(errorDescription: "Archive path can not be determined or canonically resolved.")
+		}
 		
 		try clearArchiveDirectories(for: scope, in: archivePath)
 		try setUpArchiveDirectories(for: scope, in: archivePath)
@@ -74,7 +97,7 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	
 	private func runModeRestore() throws {
 		let volumeName = try assertVolume()
-		let archivePath = expandedArchivePath!
+		let archivePath = canonicalArchivePath!
 
 		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) || force else {
 			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist or is missing directories. Use '-f' or '--force' to restore with missing sources.")

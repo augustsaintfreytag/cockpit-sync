@@ -9,16 +9,18 @@ extension CockpitSaveOperation {
 	func saveCockpitToArchive(for scope: Scope, volumeName: String, archivePath: Path) throws {
 		let (volumeMountArgument, archiveMountArgument) = dockerMountArguments(volumeName: volumeName, archivePath: archivePath)
 		let copyArguments = copyArgumentComponents(for: scope)
-		let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { (offset: $0, command: $1.command, description: $1.description) }
+		let copyCommands = containerizedCopyCommands(with: copyArguments).enumerated().map { offset, element in
+			return (offset: offset, command: element.command, description: element.description)
+		}
 		
 		for (offset, command, description) in copyCommands {
 			print("Saving \(scope.description) to archive, processing \(description), step \(offset + 1)/\(copyCommands.count).")
+			let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
 
 			do {
-				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
 				try runInShellAndAssert(command)
 			} catch {
-				print("Could not save \(description), input data is either missing, can not be read or archive directory is unusable.")
+				print("Could not save \(description). \(error.localizedDescription)")
 			}
 		}
 	}
