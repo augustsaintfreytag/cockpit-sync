@@ -31,4 +31,7 @@ enum Mode: String, Hashable, CaseIterable, ExpressibleByArgument {
 	case save
 	case restore
 	
+	case probeArchive
+	case probeVolume
+	
 }
