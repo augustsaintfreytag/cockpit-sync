@@ -36,7 +36,7 @@ extension ContainerizedCommandProvider {
 
 	/// Returns an argument used to mount an archive directory present at the given path to a container.
 	func dockerArchiveMountArgument(archivePath: Path) -> String {
-		return "-v '\(archivePath):\(containerizedArchivePath):cached'"
+		return "-v '\(archivePath):\(containerizedArchivePath):delegated'"
 	}
 	
 }
