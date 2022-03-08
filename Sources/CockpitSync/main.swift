@@ -97,10 +97,13 @@ struct CockpitSync: ParsableCommand, VolumePreparer, InVolumeDirectoryPreparer, 
 	
 	private func runModeRestore() throws {
 		let volumeName = try assertVolume()
-		let archivePath = canonicalArchivePath!
 
+		guard let archivePath = canonicalArchivePath else {
+			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' can not be resolved.")
+		}
+		
 		guard try archiveDirectoriesExist(for: scope, archivePath: archivePath) || force else {
-			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' does not exist or is missing directories. Use '-f' or '--force' to restore with missing sources.")
+			throw PrerequisiteError(errorDescription: "Archive directory '\(archivePath)' may exist but is missing directories. Use '-f' or '--force' to restore with missing sources.")
 		}
 		
 		if !inVolumeDirectoriesExist(for: scope, volumeName: volumeName) {
