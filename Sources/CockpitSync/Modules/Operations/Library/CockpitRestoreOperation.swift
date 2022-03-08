@@ -18,7 +18,7 @@ extension CockpitRestoreOperation {
 				let command = containerizedCommand(command, mounting: [volumeMountArgument, archiveMountArgument])
 				try runInShellAndAssert(command)
 			} catch {
-				print("Could not save \(description), archived data is either missing, can not be read or volume is unusable.")
+				print("Could not save \(description), archived data is either missing, can not be read or volume is unusable. \(error.localizedDescription)")
 			}
 		}
 	}
