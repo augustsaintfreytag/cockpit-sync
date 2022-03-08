@@ -12,9 +12,9 @@ extension ArchivePathProvider {
 	
 	// MARK: Paths
 	
-	var containerizedCockpitPath: Path { "/var/cockpit" }
+	var containerizedCockpitPath: Path { "/home/sync/cockpit" }
 	
-	var containerizedArchivePath: Path { "/var/archive" }
+	var containerizedArchivePath: Path { "/home/sync/archive" }
 	
 	// MARK: Path Form
 	
